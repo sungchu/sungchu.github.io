@@ -42,6 +42,8 @@ html, body {
     max-width: var(--max-content-width);
     margin: 0 auto;
     padding: 0 20px; 
+    /* 新增：確保內容不會因 padding 或 margin 溢出而換行 */
+    overflow: hidden; 
 }
 
 .header h1 {
@@ -50,7 +52,8 @@ html, body {
   font-weight: 300;
   color: var(--color-secondary); /* 使用新的深色輔色 */
   letter-spacing: 3px;
-}
+  /* 【關鍵修改】強制文字在單行顯示 */
+  **white-space: nowrap;** }
 
 .header p {
   margin: 0;
