@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NETI 療癒工作室</title>
+  <link rel="icon" href="./images/favicon.ico">
+  <style>
+    :root {
+      /* 調整後的色系：更貼近 NETI 圖片的米灰色/大理石紋理 */
+      --color-primary: #a7978e;   /* 主色/行動色：沉穩的淺棕/灰褐色 (取代原 c9b8a8) */
+      --color-secondary: #4b443c; /* 輔色：深咖啡/幾乎黑色，用於標題 (取代原 8b7e74) */
+      --color-background: #e8e2e0; /* 背景：略帶灰調的淺米色 (取代原 f5f1ed) */
+      --color-surface: #ffffff;   /* 表面/卡片：白色 (不變) */
+      --color-text-main: #5a5a5a; /* 主文本色 (不變) */
+      --color-text-dark: #3a3632; /* 深文本色 (用於 hover/重要文字) */
+      --max-content-width: 1200px;
+      --font-family-main: 'Microsoft JhengHei', 'PingFang TC', Arial, sans-serif;
+    }
+
+    /* 確保全寬度：這是解決您問題的關鍵 */
+    html, body {
+      width: 100%;
+      min-width: 320px; 
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font-family-main);
+      color: var(--color-text-main);
+      line-height: 1.7;
+      background: var(--color-background);
+      overflow-x: hidden; 
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Header - 必須是全寬背景 */
+    .header {
+      /* 調整 Header 漸層色，使其更接近品牌圖片的柔和灰色調 */
+      background: linear-gradient(135deg, #ddd8d6 0%, var(--color-background) 100%);
+      padding: 60px 30px;
+      text-align: center;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    /* Header 內部內容居中 */
+    .header-content {
+        max-width: var(--max-content-width);
+        margin: 0 auto;
+        padding: 0 20px; 
+    }
+
+    .header h1 {
+      margin: 0 0 10px 0;
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--color-secondary); /* 使用新的深色輔色 */
+      letter-spacing: 3px;
+    }
+
+    .header p {
+      margin: 0;
+      font-size: 18px;
+      color: #9f9693; /* 略調淺色文本以配合 Header 背景 */
+      font-weight: 300;
+    }
+
+    /* Navigation - 必須是全寬背景 */
+    .nav-container {
+      background: var(--color-surface);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* Navigation 內容居中對齊 Content */
+    .nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0;
+      margin: 0 auto;
+      list-style: none;
+      max-width: var(--max-content-width); 
+    }
+
+    .nav-item {
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    .nav-button {
+      width: 100%;
+      padding: 20px 15px;
+      background: transparent;
+      border: none;
+      color: var(--color-secondary); /* 使用新的深色輔色 */
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+      font-weight: 400;
+    }
+
+    .nav-button:hover {
+      background: #fcfcfc; /* 略調 hover 背景色 */
+      color: var(--color-text-dark);
+    }
+
+    .nav-button.active {
+      border-bottom-color: var(--color-primary); /* 使用新的主色 */
+      color: var(--color-text-dark);
+      font-weight: 500;
+    }
+
+    /* Content */
+    .content {
+      max-width: var(--max-content-width);
+      margin: 0 auto;
+      padding: 50px 30px;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--color-surface);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      color: var(--color-secondary); /* 使用新的深色輔色 */
+      font-size: 28px;
+      margin: 0 0 20px 0;
+      font-weight: 400;
+      border-bottom: 2px solid #e8dfd6;
+      padding-bottom: 15px;
+    }
+
+    .card h3 {
+      color: #9f9693; /* 使用略深的中性色 */
+      font-size: 22px;
+      margin: 30px 0 15px 0;
+      font-weight: 400;
+    }
+
+    .card p {
+      color: #6b6b6b;
+      font-size: 16px;
+      margin: 0 0 15px 0;
+      line-height: 1.8;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .card li {
+      padding: 12px 0;
+      color: #6b6b6b;
+      font-size: 16px;
+      border-bottom: 1px solid #f5f1ed;
+      position: relative;
+      padding-left: 25px;
+    }
+
+    .card li:before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--color-primary); /* 使用新的主色 */
+      font-size: 14px;
+    }
+	
+		
+	 /* 新增的小字樣式 */
+    .content li small {
+		color: #666;
+		font-style: italic;
+		display: block;
+		margin-top: 4px;
+		font-size: 0.875rem;
+	  }
+
+    .card li:last-child {
+      border-bottom: none;
+    }
+
+    /* Price Table */
+    .price-table {
+      margin: 30px 0;
+    }
+
+    .price-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 15px 0;
+      background: #faf8f6;
+      border-radius: 12px;
+      border-left: 4px solid var(--color-primary); /* 使用新的主色 */
+    }
+
+    .price-item .service-name {
+      font-weight: 500;
+      color: var(--color-text-dark);
+      font-size: 18px;
+    }
+
+    .price-item .service-price {
+      font-weight: 600;
+      color: var(--color-secondary); /* 使用新的輔色 */
+      font-size: 20px;
+    }
+
+    /* Link Button */
+    .link-button {
+      display: inline-block;
+      padding: 15px 35px;
+      /* 調整漸層色，使其更貼近新的主色調 */
+      background: linear-gradient(135deg, var(--color-primary) 0%, #9a8a81 100%);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 25px;
+      margin: 20px 10px 10px 0;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      box-shadow: 0 4px 15px rgba(167, 151, 142, 0.3); /* 調整陰影色 */
+    }
+
+    .link-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(167, 151, 142, 0.4);
+      background: linear-gradient(135deg, #9a8a81 0%, #8c7e75 100%);
+    }
+
+    /* Testimonial Card */
+    .testimonial {
+      background: linear-gradient(135deg, #faf8f6 0%, #f5f1ed 100%);
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px 0;
+      border-left: 5px solid var(--color-primary); /* 使用新的主色 */
+      position: relative;
+    }
+
+    .testimonial:before {
+      content: """;
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 60px;
+      color: #e8dfd6;
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-author {
+      text-align: right;
+      color: #9f9693; /* 使用新的中性色 */
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* Notice Box */
+    .notice-box {
+      background: #fbf9f8; /* 調整通知框背景色 */
+      border: 2px solid #e8dfd6;
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .notice-box h4 {
+      color: var(--color-secondary); /* 使用新的輔色 */
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    /* Icon decorations */
+    .icon {
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 32px;
+      }
+
+      .header p {
+        font-size: 16px;
+      }
+
+      .nav-button {
+        font-size: 14px;
+        padding: 15px 10px;
+      }
+      
+      .nav-item {
+        min-width: unset;
+        flex: 1 1 25%;
+      }
+
+      .content {
+        padding: 30px 20px;
+      }
+
+      .card {
+        padding: 25px;
+      }
+
+      .card h2 {
+        font-size: 24px;
+      }
+
+      .price-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+ </head>
+ <body>
+  <header class="header">
+    <div class="header-content">
+      <h1 id="site-title">催眠療癒 · 臼井靈氣</h1>
+      <p id="site-subtitle">引導你探索內在，找回身心靈的和諧平衡</p>
+    </div>
+   </header>
+
+   <nav class="nav-container">
+    <ul class="nav">
+     <li class="nav-item"><button class="nav-button active" onclick="showPage('about')">ABOUT US</button></li>
+     <li class="nav-item"><button class="nav-button" onclick="showPage('services')">一對一療癒服務</button></li>
+	 <li class="nav-item"><button class="nav-button" onclick="showPage('workshops')">療癒工作坊</button></li>
+	 <li class="nav-item"><button class="nav-button" onclick="showPage('courses')">催眠證照課程</button></li>
+     <li class="nav-item"><button class="nav-button" onclick="showPage('booking')">預約須知</button></li>
+     <li class="nav-item"><button class="nav-button" onclick="showPage('testimonials')">個案回饋</button></li>
+    </ul>
+   </nav>
+
+   <main class="content">
+    
+    <section id="about" class="page active">
+     <div class="card">
+      <h2 id="about-title"><span class="icon">✦</span>關於我們</h2>
+	  <h3>品牌理念 —— 在「非此非彼」之間，看見真實本質</h3>
+	  <p>NETI 源自梵文 neti neti 的哲學，代表不斷向內探問、溫柔剝落外在標籤的精神。在這個充滿選擇與喧囂的時代，我們致力於為身心打造一處「留白的空間」，陪伴您在每一次療癒與對話中，看見更安定、更有智慧的自己。</p>
+      <h3>療癒師介紹</h3>
+	  <p>嗨，我是宋絜（Norene），一位專業催眠師與靈氣療癒師。</p>
+	  <p>我專注於提供一對一催眠與靈氣療癒、小型催眠工作坊，以及美國催眠證照課程，陪伴每位來訪者與學員在探索自我與成長的過程中，找到平衡與智慧。</p>
+	  <p>我的一對一療癒主要於台北東門站進行，每年也會前往台中、台南與高雄提供服務，同時提供多人包場與到府療癒，讓療癒能在您熟悉的環境中進行。</p>
+	  <p>催眠工作坊與美國催眠證照課程皆為小型團體，讓學員在更親密的氛圍中練習，並獲得細緻、即時的個別指導，讓每個人的敏感度與天賦都能被看見。</p>
+	  <p>身為女性療癒師，考量靈氣療癒可能涉及少許身體觸碰，因此本服務僅限女性來訪者，以確保每位來訪者都能在安全、舒適的環境中接受療癒。</p>
+	  <h4>專業認證與訓練</h4>
+	  <ul>
+       <li>美國NGH催眠學會認證催眠師</li>
+       <li>美國NGH催眠師培訓認證講師</li>
+       <li>希塔療癒療癒師</li>
+	   <li>臼井靈氣療癒師</li>
+      </ul>
+	 </div>
+     <div class="card">
+      <h2><span class="icon">✦</span>服務項目</h2>
+      <p>我們提供三大核心服務，滿足不同需求的學習與療癒：</p>
+      <div class="price-item">
+       <div class="service-name" id="service1-title">一對一催眠/靈氣療癒</div>
+       <div class="service-price">個別療癒</div>
+      </div>
+      <div class="price-item">
+       <div class="service-name" id="service2-title">療癒工作坊</div>
+       <div class="service-price">團體學習</div>
+      </div>
+      <div class="price-item">
+       <div class="service-name" id="service3-title">催眠證照課程</div>
+       <div class="service-price">專業培訓</div>
+      </div>
+     </div>
+    </section>
+
+    <section id="services" class="page">
+     <div class="card">
+      <h2><span class="icon">✦</span>一對一療癒服務</h2>
+      <p>針對個人需求量身打造的深度療癒服務,在安全舒適的空間中,透過專業催眠技術協助您:</p>
+	  <h3 style="font-weight: bold;">催眠療癒（近捷運東門站 / 可換至台北車站場地）</h3>
+      <ul>
+       <li>觀元辰宮（含解讀與清理）
+	    <small>透過檢視與調整您內心世界的狀態（包含人際、財運、感情等），能有效改善現實生活中的運勢與能量。這樣的調整不僅能協助您更清楚地了解自己目前需要關注的生活面向，也能讓您看見內心深處真正的需求與情感狀態。</small>
+	   </li>
+       <li>前世回溯
+	    <small>探索對您今生影響最深，或最具啟發性的一世。有助於釐清重複的人生課題，或解釋對特定人事物「莫名」的情感連結。一般來說兩小時通常可以看到兩世。</small>
+	   </li>
+       <li>療癒過去創傷、內在小孩溝通
+		<small>過去的經歷與創傷影響著內心世界，放下對過去的糾結、重建信念，放下過去，不再讓過去受傷的自己困住現在的自己。</small>
+	   </li>
+       <li>身體情緒釋放
+		<small>身體在乘載過多情緒以及缺乏能量時，人會容易感到心累或是莫名不適，透過催眠可以察覺並釋放潛藏在身體中的情緒，以及解決其背後的議題。</small>
+	   </li>
+       <li>連結指導靈/守護靈/高我
+	    <small>每個人都有自己的靈性導師，包含指導靈、守護靈與高我，透過與祂們連結，可以讓祂們啟發你，讓你能夠聆聽來自靈性層面的智慧與指導。</small>
+	   </li>
+	   <li>客製化主題（請私訊討論）
+	    <small>催眠主題較為廣泛，若您的議題未涵蓋於上，或想將多項服務結合 (例如：觀元辰宮 + 連結指導靈)，請簡述您的狀況，我們會為您分析及推薦專屬方案。</small>
+	   </li>
+      </ul>
+	  <h3 style="font-weight: bold;">臼井靈氣（近捷運東門站 / 限女性）</h3>
+	  <ul>
+	   <li>全身能量平衡 + 脈輪清理
+	    <small>透過非侵入性的溫和觸碰或手位懸空，將宇宙生命能量傳輸給您。旨在疏通與平衡身體的能量場，改善能量低落、疲倦或沮喪的狀態。</small>
+	   </li>
+	  </ul>
+      <div class="price-table">
+       <h3>價目表</h3>
+       <div class="price-item">
+        <div class="service-name">催眠療癒 (120分鐘)</div>
+        <div class="service-price">NT$ 3,000</div>
+       </div>
+       <div class="price-item">
+        <div class="service-name">臼井靈氣療癒 (120分鐘)</div>
+        <div class="service-price">NT$ 2,200</div>
+       </div>
+      </div>
+     </div>
+	 </section>
+	 <section id="workshops" class="page">
+     <div class="card">
+      <h2><span class="icon">✦</span>療癒工作坊</h2>
+      <p>小班制團體課程，在安全支持的環境中，與夥伴一起學習成長，體驗催眠的療癒力量。</p>
+      <h3 style="font-weight: bold;">體驗工作坊</h3>
+      <ul>
+       <li>身體情緒與課題工作坊</li>
+       <li>指導靈溝通工作坊</li>
+	  </ul>
+	  <h3 style="font-weight: bold;">一日進階工作坊</h3>
+	  <ul>
+       <li>元辰宮工作坊</li>
+       <li>死亡與重生工作坊</li>
+	  </ul>
+	  <h3 style="font-weight: bold;">兩日深度工作坊</h3>
+	  <ul>
+       <li>自我催眠與信念重塑工作坊</li>
+	   <li>身體掃描、情緒與課題覺察工作坊</li>
+      </ul>
+      <div class="price-table">
+       <h3>工作坊費用</h3>
+       <div class="price-item">
+        <div class="service-name">體驗工作坊 (2~3小時)</div>
+        <div class="service-price">NT$ 2,800</div>
+       </div>
+       <div class="price-item">
+        <div class="service-name">一日進階工作坊</div>
+        <div class="service-price">NT$ 6,600</div>
+       </div>
+	   <div class="price-item">
+        <div class="service-name">兩日深度工作坊</div>
+        <div class="service-price">NT$ 12,000</div>
+       </div>
+      </div><a href="https://docs.google.com/forms" target="_blank" rel="noopener noreferrer" class="link-button"> 📋 工作坊報名表單 </a>
+     </div>
+	 </section>
+	 <section id="courses" class="page">
+     <div class="card">
+      <h2><span class="icon">✦</span>催眠證照課程</h2>
+      <p>培養專業催眠師的完整訓練課程，獲得國際認證資格，開啟助人與自我成長的新旅程。</p>
+      <h3>課程內容</h3>
+      <ul>
+       <li>催眠理論與歷史</li>
+       <li>催眠誘導技術</li>
+       <li>深化與喚醒技巧</li>
+       <li>催眠療癒應用</li>
+       <li>倫理與專業守則</li>
+       <li>實務演練與督導</li>
+      </ul>
+      <div class="price-table">
+       <h3>證照課程</h3>
+       <div class="price-item">
+        <div class="service-name">
+         NGH催眠師證照班 (80小時)
+        </div>
+        <div class="service-price">
+         NT$ 68,000
+        </div>
+       </div>
+      </div><a href="https://docs.google.com/forms" target="_blank" rel="noopener noreferrer" class="link-button"> 📋 證照課程報名表單 </a>
+      <div class="notice-box">
+       <h4>💎 早鳥優惠</h4>
+       <p>開課前30天報名享9折優惠</p>
+       <p>兩人同行每人享85折優惠</p>
+      </div>
+     </div>
+    </section>
+
+    <section id="booking" class="page">
+     <div class="card">
+      <h2 id="booking-notice-title"><span class="icon">✦</span>預約須知</h2>
+      <h3>預約方式</h3>
+      <p>請透過以下方式與我們聯繫:</p>
+      <ul>
+       <li>LINE官方帳號: @hypnosis</li>
+       <li>電話: 0912-345-678</li>
+       <li>Email: healing@example.com</li>
+       <li>Facebook粉絲專頁私訊</li>
+      </ul>
+      <h3>預約流程</h3>
+      <ul>
+       <li>聯繫我們說明需求</li>
+       <li>選擇適合的日期時間</li>
+       <li>繳納訂金確認預約</li>
+       <li>收到確認通知</li>
+       <li>準時前來進行療程</li>
+      </ul>
+      <div class="notice-box">
+       <h4>📌 重要提醒</h4>
+       <p>• 初次來訪請提前15分鐘到達</p>
+       <p>• 請穿著舒適寬鬆的衣物</p>
+       <p>• 療程前避免飲用含咖啡因飲料</p>
+       <p>• 請保持充足睡眠與放鬆心情</p>
+      </div>
+     </div>
+     <div class="card">
+      <h3>取消與更改政策</h3>
+      <ul>
+       <li>預約後7天前取消,全額退費</li>
+       <li>預約前3-7天取消,退還50%費用</li>
+       <li>預約前3天內取消,恕不退費</li>
+       <li>可申請一次免費更改時間 (需提前48小時)</li>
+       <li>因特殊狀況無法前來,請盡早聯繫討論</li>
+      </ul>
+      <h3>療程禁忌</h3>
+      <p>以下狀況請先告知或暫緩療程:</p>
+      <ul>
+       <li>懷孕期間</li>
+       <li>心臟病患者</li>
+       <li>癲癇症患者</li>
+       <li>嚴重精神疾病</li>
+       <li>正在服用精神科藥物</li>
+       <li>酒精或藥物成癮</li>
+      </ul>
+      <div class="notice-box">
+       <h4>💚 我們的承諾</h4>
+       <p>您的隱私與安全是我們最重視的。所有療程內容嚴格保密,提供安全舒適的療癒空間,讓您安心探索內在。</p>
+      </div>
+     </div>
+    </section>
+
+    <section id="testimonials" class="page">
+     <div class="card">
+      <h2><span class="icon">✦</span>真實個案回饋</h2>
+      <p>聽聽他們的療癒故事與轉變歷程</p>
+      <div class="testimonial">
+       <p class="testimonial-text">謝謝這次的催眠療癒，讓我32年的糾結、傷痕能有機會、管道可以療癒、諒解~面對他人無心之失，其實我並沒有錯，我也值得更好的被對待❤️‍🔥這讓我對於自己有了更大的信心面對未知的未來。<br>「你值得這個位置，這個位置也需要你這個世界大部分的人都需要我的善良，只是要小心那一小部分想利用這個善良的人」<br>謝謝前世回溯帶給我的提醒跟祝福</p>
+       <p class="testimonial-author"># 前世回溯催眠療癒</p>
+      </div>
+	  <div class="testimonial">
+       <p class="testimonial-text">謝謝這次的催眠療癒，讓我32年的糾結、傷痕能有機會、管道可以療癒、諒解~面對他人無心之失，其實我並沒有錯，我也值得更好的被對待❤️‍🔥這讓我對於自己有了更大的信心面對未知的未來。</p>
+	   <p class="testimonial-text">「你值得這個位置，這個位置也需要你這個世界大部分的人都需要我的善良，只是要小心那一小部分想利用這個善良的人」</p>
+	   <p class="testimonial-text">謝謝前世回溯帶給我的提醒跟祝福</p>
+       <p class="testimonial-author"># 前世回溯催眠療癒</p>
+      </div>
+      <div class="testimonial">
+       <p class="testimonial-text">第一次的催眠體驗，一開始有點緊張害怕自己無法進入狀態，跟隨著催眠師的引導，循序漸進的進入狀態中，也釋放了還在嬰兒時期的傷痛記憶，放下痛苦、害怕、不安全感，透過與內在小孩及母親的對話，寬恕及放下過去所有悲傷的情緒，雖然中間控制不住的哽咽哭泣😂，也因為釋放壓力，從原本的肩膀很重，慢慢地感受到變輕盈，很謝謝老師的幫助，講話很溫柔慢慢地，讓人感受到很溫和，又很專業，謝謝。</p>
+       <p class="testimonial-author"># 過去創傷催眠療癒</p>
+      </div>
+      <div class="testimonial">
+       <p class="testimonial-text">這次的催眠療癒的前幾天還很擔心會不會進入不了之類的問題，詢問老師後，不會這麼的擔心之外老師也是很用心回答呦❤️<br>催眠當天先跟老師聊聊狀況後慢慢進入老師的引導，真的好多事情是被我遺忘的了。小時候的單純、美好、開心，因為環境被我遺忘導致內心空洞以及不安全感，因為沒有好好處理一直被我往心裡塞，這情況造成惡化，去到每個環境劇情都會變得一樣。這次就鼓起勇氣好好處理💪🏻💪🏻‼️<br>催眠時流了好多眼淚（最大滴的那種😂），環境的影響害我忘記要跟自己的內在溝通，她一直在向我求救，我一次一次的忽略了她。當下我看到小時候的我跟妹妹很開心的玩。在老師的引導下去看看家裡大人的樣子、他們說些什麼，我選擇與他們一個一個擁抱🫂，才發現他們其實是很愛我的，只是他們不會表達感受以及常常忽略我的感受，跟聽不懂我這個外星人在講什麼，讓我以為他們是不愛我的。老師透過我說出來的場景、情況幫我分析，因為家中大人忙於工作的關係，我在該被愛的時候是沒有被愛的，而是我一直去愛別人（照顧妹妹），而遺忘自己是應該要被愛。才發現愛別人之前先愛自己跟照顧自己的感受。</p>
+       <p class="testimonial-author"># 過去創傷催眠療癒</p>
+      </div>
+      <div class="testimonial">
+       <p class="testimonial-text">滑IG看到NETI，跟催眠有關，沒有接觸過，剛好那一陣子心情有點低落及人生迷惘，剛好台中有催眠療癒，根本是宇宙给我的信號，第一時間報名。<br>11/18下午，有點緊張，第一次接觸催眠，跟一位陌生人，碰面前一刻才開始擔心安危但多想了，老師很親切。<br>一開始老師先透過聊天，了解我的背景及需求，並客製化我的催眠療癒。過程中，老師也隨時注意我的情緒，問要不要繼續進行下去。<br>被自己嚇到，我沒有想到我會流眼淚，內心脆弱的一塊，似乎被打開，儘管外表看起來很堅強，透過催眠，揭開自己深處的一面，最後給催眠中的自己一個擁抱。<br>透過聯天，老師講話的內容，會點醒我，跟不認識的人分享，提供不同的見解（對比之下，認識的人都會帶著偏見）<br>催眠療癒後的效果，我知道不是即時立刻發生的，但是過程中，對我而言是有放鬆狀態下看見未被發覺的自己♥做完有一種release及refresh 的感受</p>
+       <p class="testimonial-author"># 客製化催眠療癒</p>
+      </div>
+      <div class="testimonial">
+       <p class="testimonial-text">體驗了期待已久的元辰宮，很好奇自己的房子會是怎樣的。房子外圍有圍牆，大約一個人的高度，但能從外圍看到房子，進到家裡其實滿空的，物品不多，很乾淨；廚房不亮,有湯鍋、炒鍋、烤箱,櫥櫃裡有盤子；房間裡有張雙人床，衣櫃內還有些空問，還有個梳妝台在角落~<br>看完自己的房子並經過老師的說明，發現房子的解說滿符合我自己的，對自己工作上還有心態上都有更深度的認識，也有更明確的方向！<br>透過這次的體驗，以及體驗後跟老師稍微詳談，對催眠有不一樣的認識，感覺可以每隔一段時間再來做元辰宮，重新檢視自己的狀態~推薦！</p>
+       <p class="testimonial-author"># 觀元辰宮</p>
+      </div>
+     </div>
+     <div class="card">
+      <h3>💫 開始您的療癒之旅</h3>
+      <p>每個人都值得被溫柔對待,每顆心都值得被好好療癒。</p>
+      <p>如果您正在尋找改變的契機,歡迎與我們聯繫,讓我們陪伴您走向更美好的自己。</p>
+      <div class="notice-box">
+       <h4>🌸 首次體驗優惠</h4>
+       <p>初次預約一對一療程享NT$ 500元折扣</p>
+       <p>歡迎預約免費15分鐘電話諮詢</p>
+      </div>
+     </div>
+    </section>
+   </main>
+  
+  <script>
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      const buttons = document.querySelectorAll('.nav-button');
+      
+      pages.forEach(page => page.classList.remove('active'));
+      buttons.forEach(button => button.classList.remove('active'));
+      
+      document.getElementById(pageId).classList.add('active');
+      
+      // 找到對應的按鈕並加上 active 類別
+      const targetButton = Array.from(buttons).find(btn => {
+          // 根據按鈕文字判斷
+          const text = btn.textContent.toLowerCase().trim();
+          if (pageId === 'about' && text.includes('about')) return true;
+          if (pageId === 'services' && text.includes('療癒服務')) return true;
+		  if (pageId === 'workshops' && text.includes('療癒工作坊')) return true;
+		  if (pageId === 'courses' && text.includes('催眠證照課程')) return true;
+          if (pageId === 'booking' && text.includes('預約須知')) return true;
+          if (pageId === 'testimonials' && text.includes('個案回饋')) return true;
+          return false;
+      });
+      if (targetButton) {
+        targetButton.classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 啟動時確保初始狀態正確
+    document.addEventListener('DOMContentLoaded', () => {
+        // 預設啟動 'about' 頁面並激活對應按鈕
+        const initialPage = 'about';
+        document.getElementById(initialPage).classList.add('active');
+        const initialButton = document.querySelector('.nav-button');
+        if (initialButton) {
+             initialButton.classList.add('active');
+        }
+    });
+  </script>
+ </body>
+</html>
