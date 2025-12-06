@@ -261,10 +261,17 @@ html, body {
   margin: 20px 0;
   border-left: 5px solid var(--color-primary); /* 使用新的主色 */
   position: relative;
+  z-index: 1;
+}
+
+/* 【新增】確保 testimonial 內的文字層級高於裝飾引號 */
+.testimonial p, .testimonial-author {
+  position: relative;
+  z-index: 2; 
 }
 
 .testimonial:before {
-  content: "";
+  content: "”";
   position: absolute;
   top: 10px;
   left: 20px;
