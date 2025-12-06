@@ -308,7 +308,16 @@ html, body {
 /* Responsive */
 @media (max-width: 768px) {
   .header h1 {
-    font-size: 32px;
+    font-size: 32px; /* 螢幕較寬時的字體 */
+    /* **保留 white-space: nowrap;** */
+  }
+
+  /* **新增一個更小尺寸的媒體查詢 (例如 480px)** */
+  @media (max-width: 480px) {
+    .header h1 {
+      font-size: 24px; /* 極窄螢幕時再次縮小字體 */
+      letter-spacing: 1px;
+    }
   }
 
   .header p {
