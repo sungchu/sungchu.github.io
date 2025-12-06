@@ -1,0 +1,342 @@
+:root {
+  /* 調整後的色系：更貼近 NETI 圖片的米灰色/大理石紋理 */
+  --color-primary: #a7978e;    /* 主色/行動色：沉穩的淺棕/灰褐色 (取代原 c9b8a8) */
+  --color-secondary: #4b443c; /* 輔色：深咖啡/幾乎黑色，用於標題 (取代原 8b7e74) */
+  --color-background: #e8e2e0; /* 背景：略帶灰調的淺米色 (取代原 f5f1ed) */
+  --color-surface: #ffffff;    /* 表面/卡片：白色 (不變) */
+  --color-text-main: #5a5a5a; /* 主文本色 (不變) */
+  --color-text-dark: #3a3632; /* 深文本色 (用於 hover/重要文字) */
+  --max-content-width: 1200px;
+  --font-family-main: 'Microsoft JhengHei', 'PingFang TC', Arial, sans-serif;
+}
+
+/* 確保全寬度：這是解決您問題的關鍵 */
+html, body {
+  width: 100%;
+  min-width: 320px; 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family-main);
+  color: var(--color-text-main);
+  line-height: 1.7;
+  background: var(--color-background);
+  overflow-x: hidden; 
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Header - 必須是全寬背景 */
+.header {
+  /* 調整 Header 漸層色，使其更接近品牌圖片的柔和灰色調 */
+  background: linear-gradient(135deg, #ddd8d6 0%, var(--color-background) 100%);
+  padding: 60px 30px;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+/* Header 內部內容居中 */
+.header-content {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 0 20px; 
+}
+
+.header h1 {
+  margin: 0 0 10px 0;
+  font-size: 42px;
+  font-weight: 300;
+  color: var(--color-secondary); /* 使用新的深色輔色 */
+  letter-spacing: 3px;
+}
+
+.header p {
+  margin: 0;
+  font-size: 18px;
+  color: #9f9693; /* 略調淺色文本以配合 Header 背景 */
+  font-weight: 300;
+}
+
+/* Navigation - 必須是全寬背景 */
+.nav-container {
+  background: var(--color-surface);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Navigation 內容居中對齊 Content */
+.nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
+  max-width: var(--max-content-width); 
+}
+
+.nav-item {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.nav-button {
+  width: 100%;
+  padding: 20px 15px;
+  background: transparent;
+  border: none;
+  color: var(--color-secondary); /* 使用新的深色輔色 */
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  font-weight: 400;
+}
+
+.nav-button:hover {
+  background: #fcfcfc; /* 略調 hover 背景色 */
+  color: var(--color-text-dark);
+}
+
+.nav-button.active {
+  border-bottom-color: var(--color-primary); /* 使用新的主色 */
+  color: var(--color-text-dark);
+  font-weight: 500;
+}
+
+/* Content */
+.content {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 50px 30px;
+}
+
+.page {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards */
+.card {
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  color: var(--color-secondary); /* 使用新的深色輔色 */
+  font-size: 28px;
+  margin: 0 0 20px 0;
+  font-weight: 400;
+  border-bottom: 2px solid #e8dfd6;
+  padding-bottom: 15px;
+}
+
+.card h3 {
+  color: #9f9693; /* 使用略深的中性色 */
+  font-size: 22px;
+  margin: 30px 0 15px 0;
+  font-weight: 400;
+}
+
+.card p {
+  color: #6b6b6b;
+  font-size: 16px;
+  margin: 0 0 15px 0;
+  line-height: 1.8;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.card li {
+  padding: 12px 0;
+  color: #6b6b6b;
+  font-size: 16px;
+  border-bottom: 1px solid #f5f1ed;
+  position: relative;
+  padding-left: 25px;
+}
+
+.card li:before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: var(--color-primary); /* 使用新的主色 */
+  font-size: 14px;
+}
+	
+/* 新增的小字樣式 */
+.content li small {
+  color: #666;
+  font-style: italic;
+  display: block;
+  margin-top: 4px;
+  font-size: 0.875rem;
+}
+
+.card li:last-child {
+  border-bottom: none;
+}
+
+/* Price Table */
+.price-table {
+  margin: 30px 0;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: 15px 0;
+  background: #faf8f6;
+  border-radius: 12px;
+  border-left: 4px solid var(--color-primary); /* 使用新的主色 */
+}
+
+.price-item .service-name {
+  font-weight: 500;
+  color: var(--color-text-dark);
+  font-size: 18px;
+}
+
+.price-item .service-price {
+  font-weight: 600;
+  color: var(--color-secondary); /* 使用新的輔色 */
+  font-size: 20px;
+}
+
+/* Link Button */
+.link-button {
+  display: inline-block;
+  padding: 15px 35px;
+  /* 調整漸層色，使其更貼近新的主色調 */
+  background: linear-gradient(135deg, var(--color-primary) 0%, #9a8a81 100%);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 25px;
+  margin: 20px 10px 10px 0;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  box-shadow: 0 4px 15px rgba(167, 151, 142, 0.3); /* 調整陰影色 */
+}
+
+.link-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(167, 151, 142, 0.4);
+  background: linear-gradient(135deg, #9a8a81 0%, #8c7e75 100%);
+}
+
+/* Testimonial Card */
+.testimonial {
+  background: linear-gradient(135deg, #faf8f6 0%, #f5f1ed 100%);
+  border-radius: 15px;
+  padding: 30px;
+  margin: 20px 0;
+  border-left: 5px solid var(--color-primary); /* 使用新的主色 */
+  position: relative;
+}
+
+.testimonial:before {
+  content: "”";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 60px;
+  color: #e8dfd6;
+  font-family: Georgia, serif;
+}
+
+.testimonial-author {
+  text-align: right;
+  color: #9f9693; /* 使用新的中性色 */
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Notice Box */
+.notice-box {
+  background: #fbf9f8; /* 調整通知框背景色 */
+  border: 2px solid #e8dfd6;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.notice-box h4 {
+  color: var(--color-secondary); /* 使用新的輔色 */
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Icon decorations */
+.icon {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .header p {
+    font-size: 16px;
+  }
+
+  .nav-button {
+    font-size: 14px;
+    padding: 15px 10px;
+  }
+  
+  .nav-item {
+    min-width: unset;
+    flex: 1 1 25%;
+  }
+
+  .content {
+    padding: 30px 20px;
+  }
+
+  .card {
+    padding: 25px;
+  }
+
+  .card h2 {
+    font-size: 24px;
+  }
+
+  .price-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
