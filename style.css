@@ -229,7 +229,7 @@ html, body {
 }
 
 .price-item .service-price {
-  font-weight: 400;
+  font-weight: 600;
   color: var(--color-secondary); /* 使用新的輔色 */
   font-size: 8px;
 }
