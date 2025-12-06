@@ -231,7 +231,7 @@ html, body {
 .price-item .service-price {
   font-weight: 600;
   color: var(--color-secondary); /* 使用新的輔色 */
-  font-size: 20px;
+  font-size: 14px;
 }
 
 /* Link Button */
