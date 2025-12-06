@@ -42,8 +42,6 @@ html, body {
     max-width: var(--max-content-width);
     margin: 0 auto;
     padding: 0 20px; 
-    /* 新增：確保內容不會因 padding 或 margin 溢出而換行 */
-    overflow: hidden; 
 }
 
 .header h1 {
@@ -52,8 +50,7 @@ html, body {
   font-weight: 300;
   color: var(--color-secondary); /* 使用新的深色輔色 */
   letter-spacing: 3px;
-  /* 【關鍵修改】強制文字在單行顯示 */
-  **white-space: nowrap;** }
+}
 
 .header p {
   margin: 0;
@@ -231,7 +228,7 @@ html, body {
 .price-item .service-price {
   font-weight: 600;
   color: var(--color-secondary); /* 使用新的輔色 */
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* Link Button */
@@ -308,16 +305,7 @@ html, body {
 /* Responsive */
 @media (max-width: 768px) {
   .header h1 {
-    font-size: 32px; /* 螢幕較寬時的字體 */
-    /* **保留 white-space: nowrap;** */
-  }
-
-  /* **新增一個更小尺寸的媒體查詢 (例如 480px)** */
-  @media (max-width: 480px) {
-    .header h1 {
-      font-size: 24px; /* 極窄螢幕時再次縮小字體 */
-      letter-spacing: 1px;
-    }
+    font-size: 32px;
   }
 
   .header p {
