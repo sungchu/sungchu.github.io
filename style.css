@@ -218,6 +218,16 @@ html, body {
   background: #faf8f6;
   border-radius: 12px;
   border-left: 4px solid var(--color-primary); /* 使用新的主色 */
+  cursor: pointer; /* 讓滑鼠移上去時顯示手型，增加可點擊性 */
+    transition: all 0.3s ease; /* 增加過渡效果 */
+    text-decoration: none; /* 移除超連結底線 */
+    color: inherit; /* 讓內部的文字顏色繼承自父元素，避免變成藍色 */
+}
+
+/* 建議新增 hover 效果，讓使用者知道整個區塊可以點擊 */
+.price-item:hover {
+    background: #f5f1ed; /* 滑鼠滑過時，背景色稍微變淺一點 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 新增陰影或微小的抬升效果 */
 }
 
 .price-item .service-name {
@@ -473,7 +483,7 @@ html, body {
     align-items: flex-start;
     gap: 10px;
   }
-  
+
   .contact-card-list-container {
     /* 這裡使用 1fr 代表只佔一欄，實現垂直堆疊 */
     grid-template-columns: 1fr; 
