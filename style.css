@@ -473,4 +473,16 @@ html, body {
     align-items: flex-start;
     gap: 10px;
   }
+  
+  .contact-card-list-container {
+    /* 這裡使用 1fr 代表只佔一欄，實現垂直堆疊 */
+    grid-template-columns: 1fr; 
+    gap: 15px; /* 稍微縮小間距 */
+    padding: 0 10px; /* 避免在小螢幕上貼邊 */
+  }
+
+  .contact-card {
+    /* 在小螢幕上保持完整卡片樣式，但 padding 可以略小 */
+    padding: 20px; 
+  }
 }
