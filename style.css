@@ -415,7 +415,9 @@ html, body {
 /* =================================================================
  * 6. 響應式設計 (Media Queries)
  * ----------------------------------------------------------------- */
+
 @media (max-width: 768px) {
+    /* --- Header --- */
     .header h1 {
         font-size: 32px;
     }
@@ -424,22 +426,18 @@ html, body {
         font-size: 16px;
     }
 
-    .nav {
-        /* 【關鍵修正 1】: 確保導覽列的 Flexbox 在手機上也能平均分配空間 (四個主要項目) */
-        justify-content: space-around;
-    }
-
-    .nav-item {
-        /* 讓每個項目都平均分配空間，確保四個項目可以並排 */
-        flex: 1 1 25%;
-        min-width: unset;
-    }
-
+    /* --- Navigation --- */
     .nav-button {
         font-size: 14px;
-        padding: 15px 5px; /* 縮小左右 padding 以騰出空間 */
+        padding: 15px 10px;
     }
     
+    .nav-item {
+        min-width: unset;
+        flex: 1 1 25%;
+    }
+
+    /* --- Content & Cards --- */
     .content {
         padding: 30px 20px;
     }
@@ -452,13 +450,16 @@ html, body {
         font-size: 24px;
     }
 
+    /* --- Price Table --- */
     .price-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
 
+    /* --- Contact Cards (Grid) --- */
     .contact-card-list-container {
+        /* 手機版：堆疊為單欄 */
         grid-template-columns: 1fr; 
         gap: 15px;
         padding: 0 10px;
@@ -466,56 +467,6 @@ html, body {
 
     .contact-card {
         padding: 20px; 
-    }
-
-    /* --- 手機版下拉選單修正 (實現懸浮效果) --- */
-    .nav-item.dropdown {
-        /* 【關鍵修正 2】: 移除 100% 寬度，讓它只佔 25% */
-        flex: 1 1 25%;
-        position: relative; /* 必須為相對定位，才能讓子選單懸浮 */
-    }
-
-    .submenu {
-        /* 【關鍵修正 3】: 重新啟用絕對定位，讓它懸浮在按鈕下方 */
-        position: absolute; 
-        
-        /* 讓選單置中於其父按鈕 (.nav-item.dropdown) 下方 */
-        left: 50%; 
-        transform: translateX(-50%); 
-        
-        /* 設定選單寬度，不要超過螢幕，但要足夠顯示內容 */
-        min-width: 150px; 
-        max-width: 90vw; /* 確保選單不會超出螢幕邊界 */
-        
-        /* 恢復視覺樣式，讓它看起來是懸浮卡片 */
-        background: var(--color-surface);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        border-radius: 5px;
-        border-top: none; 
-        
-        z-index: 1000;
-        
-        /* 確保隱藏/顯示邏輯正確 */
-        display: none; 
-        opacity: 0; 
-    }
-
-    /* 只在 .dropdown.active-dropdown 被點擊時顯示 */
-    .dropdown.active-dropdown .submenu {
-        display: block;
-        opacity: 1;
-    }
-    
-    /* 確保手機上 hover 不會意外觸發顯示 */
-    .dropdown:hover .submenu {
-        display: none !important; 
-    }
-
-    /* 確保子選單按鈕的風格統一 */
-    .submenu .nav-button {
-        width: 100%;
-        text-align: left; /* 選單項目通常靠左對齊 */
-        padding: 10px 15px;
     }
 }
 
