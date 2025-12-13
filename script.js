@@ -71,7 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdownItem.classList.toggle('active-dropdown');
 
             // 確保點擊後，頁面上的全局收合監聽器不會立即關閉它。
-            event.stopPropagation();
+            // 將 event.stopPropagation() 留在此處
+            event.stopPropagation(); 
         });
 
         // 2. 點擊頁面其他地方時：關閉選單 (保留此功能)
