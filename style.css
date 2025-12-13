@@ -522,7 +522,7 @@ html, body {
 }
 
 /* =================================================================
- * 7. 新增：下拉式選單樣式 (Dropdown)
+ * 7. 下拉式選單樣式 (Dropdown)
  * ----------------------------------------------------------------- */
 .nav-item.dropdown {
     position: relative; /* 讓子選單可以相對於此項目定位 */
@@ -549,17 +549,19 @@ html, body {
     overflow: hidden;
     z-index: 1000;
     
-    /* 預設隱藏 */
+    /* 預設隱藏 【修正】：新增 visibility */
     display: none;
     opacity: 0;
+    visibility: hidden; 
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* 顯示下拉選單時的樣式 */
+/* 顯示下拉選單時的樣式 【修正】：確保桌面滑鼠滑過和點擊都有效 */
 .dropdown:hover .submenu,
 .dropdown.active-dropdown .submenu {
     display: block;
     opacity: 1;
+    visibility: visible;
 }
 
 /* 下拉選單內部的按鈕和項目樣式調整 */
