@@ -1,3 +1,10 @@
+/**
+ * NETI 療癒工作室 JavaScript (最終穩定版本 - 確保手機下拉開啓和頁面切換)
+ */
+
+/**
+ * 根據 pageId 切換頁面內容和導覽列按鈕的激活狀態。
+ */
 function showPage(pageId) {
     const pages = document.querySelectorAll('.page');
     const buttons = document.querySelectorAll('.nav-button');
@@ -38,7 +45,16 @@ function showPage(pageId) {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // *** 注意：此處刻意移除自動收回選單的邏輯 ***
+    // 延遲關閉選單（用於子項目點擊後收回）
+    // 【關鍵修正】：如果目標是子項目，延遲關閉。
+    const targetIsSubmenuItem = targetButton && targetButton.closest('.submenu');
+    if (targetIsSubmenuItem) {
+        setTimeout(() => {
+            document.querySelectorAll('.dropdown').forEach(item => {
+                item.classList.remove('active-dropdown');
+            });
+        }, 100); 
+    }
 }
 
 // 啟動時和下拉式選單的邏輯處理
@@ -48,23 +64,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownItem = dropdownBtn ? dropdownBtn.closest('.dropdown') : null;
 
     if (dropdownItem) {
-        // 1. 點擊主按鈕時：切換 'active-dropdown' 類別來顯示/隱藏選單
+        // 1. 點擊主按鈕時：開啓選單
         dropdownBtn.addEventListener('click', (event) => {
-            // 阻止事件傳遞給 document，防止立即被 document 的監聽器關閉
-            event.stopPropagation(); 
-            
-            // 每次點擊都切換狀態
+            // 【關鍵修正】：移除所有不必要的 stopPropagation()。
+            // 只需要 toggle active-dropdown 狀態。
             dropdownItem.classList.toggle('active-dropdown');
+
+            // 確保點擊後，頁面上的全局收合監聽器不會立即關閉它。
+            event.stopPropagation();
         });
 
-        // 2. 點擊頁面其他地方時：關閉選單 (保留此功能，確保點擊頁面空白處可關閉)
+        // 2. 點擊頁面其他地方時：關閉選單 (保留此功能)
         document.addEventListener('click', (event) => {
             if (!dropdownItem.contains(event.target)) {
                 dropdownItem.classList.remove('active-dropdown');
             }
         });
         
-        // *** 子選單按鈕沒有額外的 addEventListener 處理收回 ***
+        // 【新增】：子選單按鈕，確保點擊時不會觸發外部的收合邏輯
+        dropdownItem.querySelectorAll('.submenu .nav-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                // 阻止事件冒泡到主按鈕，防止出現雙擊效果
+                event.stopPropagation();
+            });
+        });
     }
 
     // 初始化頁面
