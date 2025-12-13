@@ -38,10 +38,13 @@ function showPage(pageId) {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // 【關鍵修正】：無論如何，切換頁面後，強制關閉所有下拉選單。
-    document.querySelectorAll('.dropdown').forEach(item => {
-        item.classList.remove('active-dropdown');
-    });
+    // 【核心修正】：將選單關閉邏輯放入延遲執行。
+    // 這能確保瀏覽器處理完所有觸控事件和潛在的 toggle 後，再強制關閉。
+    setTimeout(() => {
+        document.querySelectorAll('.dropdown').forEach(item => {
+            item.classList.remove('active-dropdown');
+        });
+    }, 100); // 延遲 100 毫秒
 }
 
 // 啟動時和下拉式選單的邏輯處理
@@ -51,26 +54,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownItem = dropdownBtn ? dropdownBtn.closest('.dropdown') : null;
 
     if (dropdownItem) {
-        // 1. 點擊主按鈕時：確保選單開啓，並阻止事件冒泡。
+        // 1. 點擊主按鈕時：開啓選單
         dropdownBtn.addEventListener('click', (event) => {
-            // 阻止事件傳遞給 document，防止立即被關閉
+            // 阻止事件傳遞給 document，防止立即被 document 的監聽器關閉
             event.stopPropagation(); 
             
             // 每次點擊都切換狀態
             dropdownItem.classList.toggle('active-dropdown');
         });
 
-        // 2. 點擊子選單按鈕時：不再需要額外的事件監聽器來收回選單。
-        // 因為 showPage() 函式 (由 onclick 觸發) 內部已經加入了
-        // 強制關閉所有選單 (document.querySelectorAll('.dropdown')...remove('active-dropdown')) 的邏輯。
-        
-        // 3. 點擊頁面其他地方時：關閉選單
+        // 2. 點擊頁面其他地方時：關閉選單
         document.addEventListener('click', (event) => {
-            // 只有當點擊目標不在下拉容器內部時，才關閉選單
+            // 如果點擊目標不在下拉容器內部，則移除 active-dropdown
             if (!dropdownItem.contains(event.target)) {
                 dropdownItem.classList.remove('active-dropdown');
             }
         });
+        
+        // 【重要】：子選單按鈕的點擊事件不用再添加監聽器。
+        // 它們會觸發 onclick="showPage(...)" -> showPage 結尾的 setTimeout 會處理關閉。
     }
 
     // 初始化頁面
