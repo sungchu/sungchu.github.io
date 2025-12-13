@@ -20,7 +20,6 @@ function showPage(pageId) {
     const targetButton = Array.from(buttons).find(btn => {
         // 透過解析 onclick 屬性找到對應的 pageId
         const btnPageId = btn.getAttribute('onclick')?.match(/showPage\('([^']+)'\)/)?.[1];
-        
         return btnPageId === pageId;
     });
 
@@ -58,22 +57,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownItem = dropdownBtn ? dropdownBtn.closest('.dropdown') : null;
 
     if (dropdownItem) {
-        // 點擊主按鈕時：切換 'active-dropdown' 類別來顯示/隱藏選單
+        // 1. 點擊主按鈕時：切換 'active-dropdown' 類別來顯示/隱藏選單
         dropdownBtn.addEventListener('click', (event) => {
             // 點擊下拉按鈕時，阻止事件傳播，避免立即關閉
             event.stopPropagation(); 
             dropdownItem.classList.toggle('active-dropdown');
         });
 
-        // 點擊子選單按鈕時：【自動收回選單】
+        // 2. 點擊子選單按鈕時：【自動收回選單】
         dropdownItem.querySelectorAll('.submenu .nav-button').forEach(button => {
+            // 【重要修正】：使用 setTimeout 延遲收回動作，確保 showPage 執行的激活邏輯已經完成。
             button.addEventListener('click', () => {
-                // 點擊子項目後，切換頁面 (由 onclick 處理)，然後關閉選單
-                dropdownItem.classList.remove('active-dropdown');
+                setTimeout(() => {
+                    dropdownItem.classList.remove('active-dropdown');
+                }, 50); // 短暫延遲 50ms
             });
         });
 
-        // 點擊頁面其他地方時：關閉選單
+        // 3. 點擊頁面其他地方時：關閉選單
         document.addEventListener('click', (event) => {
             // 如果點擊目標不在下拉容器內，則移除 active-dropdown
             if (!dropdownItem.contains(event.target)) {
