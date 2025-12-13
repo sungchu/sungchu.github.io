@@ -1,7 +1,3 @@
-/**
- * 根據 pageId 切換頁面內容和導覽列按鈕的激活狀態。
- * 同時處理 History API 和頁面滾動。
- */
 function showPage(pageId) {
     const pages = document.querySelectorAll('.page');
     const buttons = document.querySelectorAll('.nav-button');
@@ -22,9 +18,8 @@ function showPage(pageId) {
 
     // 找到對應的按鈕並加上 active 類別
     const targetButton = Array.from(buttons).find(btn => {
-        // 為了支援中文按鈕，根據文本內容進行判斷
-        const text = btn.textContent.toLowerCase().trim();
-        const btnPageId = btn.getAttribute('onclick').match(/showPage\('([^']+)'\)/)?.[1];
+        // 透過解析 onclick 屬性找到對應的 pageId
+        const btnPageId = btn.getAttribute('onclick')?.match(/showPage\('([^']+)'\)/)?.[1];
         
         return btnPageId === pageId;
     });
@@ -32,10 +27,11 @@ function showPage(pageId) {
     if (targetButton) {
         targetButton.classList.add('active');
         
-        // 【新增邏輯】: 如果被激活的按鈕是下拉選單中的子項目，
+        // 【關鍵邏輯】：如果被激活的按鈕是下拉選單中的子項目，
         // 則也要將父層的 '服務項目' 按鈕標記為 active，以保持視覺一致性。
         const parentSubmenu = targetButton.closest('.submenu');
         if (parentSubmenu) {
+            // 找到主按鈕 (即 submenu 的前一個兄弟元素)
             const dropdownBtn = parentSubmenu.previousElementSibling;
             if (dropdownBtn && dropdownBtn.id === 'service-dropdown-btn') {
                 dropdownBtn.classList.add('active');
@@ -50,6 +46,7 @@ function showPage(pageId) {
         window.history.pushState({ page: pageId }, '', newHash);
     }
 
+    // 平滑滾動至頁面頂部
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -61,25 +58,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownItem = dropdownBtn ? dropdownBtn.closest('.dropdown') : null;
 
     if (dropdownItem) {
-        // 點擊主要按鈕時切換 'active-dropdown' 類別
+        // 點擊主按鈕時：切換 'active-dropdown' 類別來顯示/隱藏選單
         dropdownBtn.addEventListener('click', (event) => {
-            // 點擊下拉按鈕時，不應觸發其他 showPage 邏輯
-            if (event.currentTarget === dropdownBtn) {
-                event.stopPropagation(); // 防止點擊按鈕後立即觸發 document 點擊事件
-                dropdownItem.classList.toggle('active-dropdown');
-            }
+            // 點擊下拉按鈕時，阻止事件傳播，避免立即關閉
+            event.stopPropagation(); 
+            dropdownItem.classList.toggle('active-dropdown');
         });
 
-        // 點擊子選單按鈕時關閉選單 (showPage 函式會自動處理頁面切換)
+        // 點擊子選單按鈕時：【自動收回選單】
         dropdownItem.querySelectorAll('.submenu .nav-button').forEach(button => {
             button.addEventListener('click', () => {
-                // 點擊子項目後關閉選單
+                // 點擊子項目後，切換頁面 (由 onclick 處理)，然後關閉選單
                 dropdownItem.classList.remove('active-dropdown');
             });
         });
 
-        // 點擊頁面其他地方時關閉選單
+        // 點擊頁面其他地方時：關閉選單
         document.addEventListener('click', (event) => {
+            // 如果點擊目標不在下拉容器內，則移除 active-dropdown
             if (!dropdownItem.contains(event.target)) {
                 dropdownItem.classList.remove('active-dropdown');
             }
