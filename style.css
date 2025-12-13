@@ -212,7 +212,7 @@ html, body {
     position: absolute;
     left: 0;
     color: var(--color-primary);
-    font-size: 18px;
+    font-size: 16px;
 }
 
 /* 列表內的小字樣式 */
@@ -417,65 +417,107 @@ html, body {
  * ----------------------------------------------------------------- */
 
 @media (max-width: 768px) {
-    /* 確保漢堡按鈕出現 */
-    .menu-toggle-btn {
-        display: block; /* 讓按鈕顯示出來 */
-        position: absolute; /* 放在角落 */
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 200; /* 高於所有內容 */
-        /* ... 其他按鈕樣式 ... */
+    /* --- Header --- */
+    .header h1 {
+        font-size: 32px;
     }
 
-    /* 隱藏原導覽列 */
-    .nav {
-        /* 將導覽列轉換為側邊抽屜 */
-        position: fixed;
-        top: 0;
-        right: -300px; /* 預設隱藏在右側螢幕外 */
-        width: 250px; /* 抽屜寬度 */
-        height: 100vh;
-        background: var(--color-surface);
-        box-shadow: -4px 0 15px rgba(0,0,0,0.1);
-        z-index: 150;
-        transition: right 0.3s ease;
-        
-        flex-direction: column; /* 垂直堆疊項目 */
-        align-items: flex-start;
-        padding-top: 80px;
-    }
-    
-    /* 點擊後顯示導覽列 */
-    .nav.menu-open {
-        right: 0; /* 滑入螢幕內 */
-    }
-
-    /* 調整項目樣式，使其適合垂直列表 */
-    .nav-item {
-        width: 100%;
-        border-bottom: 1px solid #eee;
-    }
-    .nav-button {
-        text-align: left;
-        padding: 15px 20px;
+    .header p {
         font-size: 16px;
     }
     
-    /* 在漢堡選單內，下拉子選單直接展開，不需要 active-dropdown 類別 */
-    .submenu {
-        position: static; /* 轉換為標準文檔流 */
-        display: block; /* 始終顯示 */
-        width: 100%;
-        box-shadow: none;
-        background: #fcfcfc; /* 區分父項目 */
-        padding-left: 20px;
+    /* --- Navigation: 實現四欄橫向佈局 --- */
+    .nav {
+        justify-content: space-around;
+        flex-wrap: nowrap; /* 確保不換行 */
     }
-}
-/* 桌面版時，隱藏漢堡按鈕 */
-@media (min-width: 769px) {
-    .menu-toggle-btn {
+
+    .nav-button {
+        font-size: 14px;
+        padding: 15px 5px; /* 縮小左右 padding 以騰出空間 */
+    }
+    
+    .nav-item {
+        /* 【關鍵修正 1】：讓每個項目都平均分配空間，確保四個項目可以並排 */
+        flex: 1 1 25%;
+        min-width: unset;
+    }
+    
+    /* --- 手機版下拉選單修正 (實現懸浮效果和收合) --- */
+    .nav-item.dropdown {
+        /* 保持相對定位 */
+        position: relative; 
+    }
+
+    .submenu {
+        /* 【關鍵修正 2】：在手機上保持絕對定位，實現懸浮效果 */
+        position: absolute; 
+        
+        /* 讓選單置中於其父按鈕 (.nav-item.dropdown) 下方 */
+        left: 50%; 
+        transform: translateX(-50%); 
+        
+        /* 設定選單寬度，不要超過螢幕，但要足夠顯示內容 */
+        min-width: 150px; 
+        max-width: 90vw; /* 確保選單不會超出螢幕邊界 */
+        
+        /* 恢復視覺樣式，讓它看起來是懸浮卡片 */
+        background: var(--color-surface);
+        box-shadow: 0 0 10px rgba(0,0,0,0.15); /* 輕微陰影 */
+        border-radius: 5px;
+        border-top: none; 
+        
+        z-index: 1000;
+        
+        /* 確保隱藏/顯示邏輯正確 */
         display: none;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* 確保手機上 hover 不會意外觸發顯示 (這會覆蓋桌面版的 hover 樣式)
+    .dropdown:hover .submenu {
+        display: none !important;
+        visibility: hidden !important; 
+    } */
+
+    /* 只在 .dropdown.active-dropdown 被點擊時顯示 */
+    .dropdown.active-dropdown .submenu {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    /* --- Content & Cards --- */
+    .content {
+        padding: 30px 20px;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    .card h2 {
+        font-size: 24px;
+    }
+
+    /* --- Price Table --- */
+    .price-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* --- Contact Cards (Grid) --- */
+    .contact-card-list-container {
+        /* 手機版：堆疊為單欄 */
+        grid-template-columns: 1fr; 
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .contact-card {
+        padding: 20px; 
     }
 }
 
@@ -515,7 +557,7 @@ html, body {
 }
 
 /* 顯示下拉選單時的樣式 【修正】：確保桌面滑鼠滑過和點擊都有效 */
-.dropdown:hover .submenu,
+/* .dropdown:hover .submenu, */
 .dropdown.active-dropdown .submenu {
     display: block;
     opacity: 1;
@@ -536,33 +578,4 @@ html, body {
 
 .submenu .nav-button:hover {
     background: #f0f0f0;
-}
-
-/* =================================================================
- * 8. 底部連結 (Footer Link)
- * ----------------------------------------------------------------- */
-.footer-link-container {
-    text-align: center;
-    padding: 40px 0 60px 0; /* 增加上下間距 */
-    border-top: 1px solid #dcd7d5; /* 輕微分隔線 */
-    margin-top: 50px;
-    background: var(--color-background); 
-}
-
-.back-to-top-link {
-    display: inline-block;
-    color: var(--color-primary); /* 使用主色系 */
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 10px 20px;
-    border: 1px solid var(--color-primary);
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-.back-to-top-link:hover {
-    background: var(--color-primary);
-    color: var(--color-surface); /* 文字變為白色 */
-    text-decoration: none;
 }
