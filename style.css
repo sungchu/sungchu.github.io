@@ -55,7 +55,7 @@ html, body {
 
 .header p {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
   color: #9f9693; /* 略調淺色文本以配合 Header 背景 */
   font-weight: 300;
 }
