@@ -475,11 +475,11 @@ html, body {
         visibility: hidden;
     }
 
-    /* 確保手機上 hover 不會意外觸發顯示 (這會覆蓋桌面版的 hover 樣式) */
+    /* 確保手機上 hover 不會意外觸發顯示 (這會覆蓋桌面版的 hover 樣式)
     .dropdown:hover .submenu {
         display: none !important;
         visibility: hidden !important; 
-    }
+    } */
 
     /* 只在 .dropdown.active-dropdown 被點擊時顯示 */
     .dropdown.active-dropdown .submenu {
@@ -557,7 +557,7 @@ html, body {
 }
 
 /* 顯示下拉選單時的樣式 【修正】：確保桌面滑鼠滑過和點擊都有效 */
-.dropdown:hover .submenu,
+/* .dropdown:hover .submenu, */
 .dropdown.active-dropdown .submenu {
     display: block;
     opacity: 1;
