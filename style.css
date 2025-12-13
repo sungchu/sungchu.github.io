@@ -55,7 +55,7 @@ html, body {
 
 .header p {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
   color: #9f9693; /* 略調淺色文本以配合 Header 背景 */
   font-weight: 300;
 }
@@ -197,7 +197,7 @@ html, body {
   font-style: italic;
   display: block;
   margin-top: 4px;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .card li:last-child {
