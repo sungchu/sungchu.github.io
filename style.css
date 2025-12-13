@@ -177,7 +177,7 @@ html, body {
 .card li {
   padding: 12px 0;
   color: #6b6b6b;
-  font-size: 16px;
+  font-size: 20px;
   border-bottom: 1px solid #f5f1ed;
   position: relative;
   padding-left: 25px;
@@ -197,7 +197,7 @@ html, body {
   font-style: italic;
   display: block;
   margin-top: 4px;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .card li:last-child {
