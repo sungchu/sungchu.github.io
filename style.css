@@ -1,40 +1,56 @@
+/* =================================================================
+ * 1. CSS 變數 (Colors & Typography)
+ * -----------------------------------------------------------------
+ * 調整後的色系：更貼近 NETI 圖片的米灰色/大理石紋理
+ * ================================================================= */
 :root {
-  /* 調整後的色系：更貼近 NETI 圖片的米灰色/大理石紋理 */
-  --color-primary: #a7978e;    /* 主色/行動色：沉穩的淺棕/灰褐色 (取代原 c9b8a8) */
-  --color-secondary: #4b443c; /* 輔色：深咖啡/幾乎黑色，用於標題 (取代原 8b7e74) */
-  --color-background: #e8e2e0; /* 背景：略帶灰調的淺米色 (取代原 f5f1ed) */
-  --color-surface: #ffffff;    /* 表面/卡片：白色 (不變) */
-  --color-text-main: #5a5a5a; /* 主文本色 (不變) */
-  --color-text-dark: #3a3632; /* 深文本色 (用於 hover/重要文字) */
-  --max-content-width: 1200px;
-  --font-family-main: 'Microsoft JhengHei', 'PingFang TC', Arial, sans-serif;
+    /* 主要色系 */
+    --color-primary: #a7978e;     /* 主色/行動色：沉穩的淺棕/灰褐色 */
+    --color-secondary: #4b443c;   /* 輔色：深咖啡/幾乎黑色，用於標題 */
+    --color-background: #e8e2e0;  /* 背景：略帶灰調的淺米色 */
+    --color-surface: #ffffff;     /* 表面/卡片：白色 */
+    
+    /* 文字色系 */
+    --color-text-main: #5a5a5a;   /* 主文本色 */
+    --color-text-dark: #3a3632;   /* 深文本色 (用於 hover/重要文字) */
+    
+    /* 佈局/字體 */
+    --max-content-width: 1200px;
+    --font-family-main: 'Microsoft JhengHei', 'PingFang TC', Arial, sans-serif;
 }
 
-/* 確保全寬度：這是解決您問題的關鍵 */
-html, body {
-  width: 100%;
-  min-width: 320px; 
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: var(--font-family-main);
-  color: var(--color-text-main);
-  line-height: 1.7;
-  background: var(--color-background);
-  overflow-x: hidden; 
-}
-
+/* =================================================================
+ * 2. 基本重置 (Base/Reset)
+ * ----------------------------------------------------------------- */
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-/* Header - 必須是全寬背景 */
+html, body {
+    width: 100%;
+    min-width: 320px; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family-main);
+    color: var(--color-text-main);
+    line-height: 1.7;
+    background: var(--color-background);
+    /* 確保全寬度，避免水平滾動條 */
+    overflow-x: hidden; 
+}
+
+/* =================================================================
+ * 3. 核心佈局 (Layout: Header, Nav, Content)
+ * ----------------------------------------------------------------- */
+
+/* --- Header: 必須是全寬背景 --- */
 .header {
-  /* 調整 Header 漸層色，使其更接近品牌圖片的柔和灰色調 */
-  background: linear-gradient(135deg, #ddd8d6 0%, var(--color-background) 100%);
-  padding: 60px 30px;
-  text-align: center;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    /* 調整 Header 漸層色，使其更接近品牌圖片的柔和灰色調 */
+    background: linear-gradient(135deg, #ddd8d6 0%, var(--color-background) 100%);
+    padding: 60px 30px;
+    text-align: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
 }
 
 /* Header 內部內容居中 */
@@ -42,457 +58,414 @@ html, body {
     max-width: var(--max-content-width);
     margin: 0 auto;
     padding: 0 20px; 
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .header h1 {
-  margin: 0 0 10px 0;
-  font-size: 42px;
-  font-weight: 300;
-  color: var(--color-secondary); /* 使用新的深色輔色 */
-  letter-spacing: 3px;
+    margin: 0 0 10px 0;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--color-secondary);
+    letter-spacing: 3px;
 }
 
 .header p {
-  margin: 0;
-  font-size: 18px;
-  color: #9f9693; /* 略調淺色文本以配合 Header 背景 */
-  font-weight: 300;
+    margin: 0;
+    font-size: 18px;
+    color: #9f9693;
+    font-weight: 300;
 }
 
-/* Navigation - 必須是全寬背景 */
+/* --- Navigation: 必須是全寬背景且固定在頂部 --- */
 .nav-container {
-  background: var(--color-surface);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+    background: var(--color-surface);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 /* Navigation 內容居中對齊 Content */
 .nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 0 auto;
-  list-style: none;
-  max-width: var(--max-content-width); 
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0 auto;
+    list-style: none;
+    max-width: var(--max-content-width); 
 }
 
 .nav-item {
-  flex-grow: 1;
-  text-align: center;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .nav-button {
-  width: 100%;
-  padding: 20px 15px;
-  background: transparent;
-  border: none;
-  color: var(--color-secondary); /* 使用新的深色輔色 */
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-bottom: 3px solid transparent;
-  font-weight: 400;
+    width: 100%;
+    padding: 20px 15px;
+    background: transparent;
+    border: none;
+    color: var(--color-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    font-weight: 400;
 }
 
 .nav-button:hover {
-  background: #fcfcfc; /* 略調 hover 背景色 */
-  color: var(--color-text-dark);
+    background: #fcfcfc;
+    color: var(--color-text-dark);
 }
 
 .nav-button.active {
-  border-bottom-color: var(--color-primary); /* 使用新的主色 */
-  color: var(--color-text-dark);
-  font-weight: 500;
+    border-bottom-color: var(--color-primary);
+    color: var(--color-text-dark);
+    font-weight: 500;
 }
 
-/* Content */
+/* --- Content: 主要內容區塊 --- */
 .content {
-  max-width: var(--max-content-width);
-  margin: 0 auto;
-  padding: 50px 30px;
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 50px 30px;
 }
 
 .page {
-  display: none;
-  animation: fadeIn 0.5s ease;
+    display: none;
+    animation: fadeIn 0.5s ease;
 }
 
 .page.active {
-  display: block;
+    display: block;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Cards */
+/* =================================================================
+ * 4. 組件 (Components: Card, Button, Price Table)
+ * ----------------------------------------------------------------- */
+
+/* --- Card: 通用卡片樣式 --- */
 .card {
-  background: var(--color-surface);
-  border-radius: 20px;
-  padding: 40px;
-  margin-bottom: 30px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--color-surface);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
 }
 
 .card h2 {
-  color: var(--color-secondary); /* 使用新的深色輔色 */
-  font-size: 28px;
-  margin: 0 0 20px 0;
-  font-weight: 400;
-  border-bottom: 2px solid #e8dfd6;
-  padding-bottom: 15px;
+    color: var(--color-secondary);
+    font-size: 28px;
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    border-bottom: 2px solid #e8dfd6;
+    padding-bottom: 15px;
 }
 
 .card h3 {
-  color: #9f9693; /* 使用略深的中性色 */
-  font-size: 22px;
-  margin: 30px 0 15px 0;
-  font-weight: 400;
+    color: #9f9693;
+    font-size: 22px;
+    margin: 30px 0 15px 0;
+    font-weight: 400;
 }
 
 .card p {
-  color: #6b6b6b;
-  font-size: 16px;
-  margin: 0 0 15px 0;
-  line-height: 1.8;
+    color: #6b6b6b;
+    font-size: 16px;
+    margin: 0 0 15px 0;
+    line-height: 1.8;
 }
 
 .card ul {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
 }
 
 .card li {
-  padding: 12px 0;
-  color: #6b6b6b;
-  font-size: 22px;
-  border-bottom: 1px solid #f5f1ed;
-  position: relative;
-  padding-left: 25px;
-}
-
-.card li:before {
-  content: "✦";
-  position: absolute;
-  left: 0;
-  color: var(--color-primary); /* 使用新的主色 */
-  font-size: 14px;
-}
-	
-/* 新增的小字樣式 */
-.content li small {
-  color: #666;
-  font-style: italic;
-  display: block;
-  margin-top: 4px;
-  font-size: 16px;
+    padding: 12px 0;
+    color: #6b6b6b;
+    font-size: 22px;
+    border-bottom: 1px solid #f5f1ed;
+    position: relative;
+    padding-left: 25px;
 }
 
 .card li:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
-/* Price Table */
+.card li:before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-size: 16px;
+}
+
+/* 列表內的小字樣式 */
+.content li small {
+    color: #666;
+    /* font-style: italic; */
+    display: block;
+    margin-top: 4px;
+    font-size: 16px;
+}
+
+/* 列表內的超連結樣式 */
+.card li a {
+    color: var(--color-primary); 
+    text-decoration: none; 
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.card li a:hover {
+    color: var(--color-text-dark);
+    text-decoration: underline;
+}
+
+/* --- Price Table: 服務價格表單項目 --- */
 .price-table {
-  margin: 30px 0;
+    margin: 30px 0;
 }
 
 .price-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  margin: 15px 0;
-  background: #faf8f6;
-  border-radius: 12px;
-  border-left: 4px solid var(--color-primary); /* 使用新的主色 */
-  cursor: pointer; /* 讓滑鼠移上去時顯示手型，增加可點擊性 */
-    transition: all 0.3s ease; /* 增加過渡效果 */
-    text-decoration: none; /* 移除超連結底線 */
-    color: inherit; /* 讓內部的文字顏色繼承自父元素，避免變成藍色 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin: 15px 0;
+    background: #faf8f6;
+    border-radius: 12px;
+    border-left: 4px solid var(--color-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
 }
 
-/* 建議新增 hover 效果，讓使用者知道整個區塊可以點擊 */
 .price-item:hover {
-    background: #f5f1ed; /* 滑鼠滑過時，背景色稍微變淺一點 */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 新增陰影或微小的抬升效果 */
+    background: #f5f1ed;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .price-item .service-name {
-  font-weight: 500;
-  color: var(--color-text-dark);
-  font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    font-size: 18px;
 }
 
 .price-item .service-price {
-  font-weight: 600;
-  color: var(--color-secondary); /* 使用新的輔色 */
-  font-size: 16px;
+    font-weight: 600;
+    color: var(--color-secondary);
+    font-size: 16px;
 }
 
-/* Link Button */
+/* --- Link Button: 行動呼籲按鈕 --- */
 .link-button {
-  display: inline-block;
-  padding: 15px 35px;
-  /* 調整漸層色，使其更貼近新的主色調 */
-  background: linear-gradient(135deg, var(--color-primary) 0%, #9a8a81 100%);
-  color: #ffffff;
-  text-decoration: none;
-  border-radius: 25px;
-  margin: 20px 10px 10px 0;
-  transition: all 0.3s ease;
-  font-size: 16px;
-  box-shadow: 0 4px 15px rgba(167, 151, 142, 0.3); /* 調整陰影色 */
+    display: inline-block;
+    padding: 15px 35px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #9a8a81 100%);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 25px;
+    margin: 20px 10px 10px 0;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    box-shadow: 0 4px 15px rgba(167, 151, 142, 0.3);
 }
 
 .link-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(167, 151, 142, 0.4);
-  background: linear-gradient(135deg, #9a8a81 0%, #8c7e75 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(167, 151, 142, 0.4);
+    background: linear-gradient(135deg, #9a8a81 0%, #8c7e75 100%);
 }
 
-/* Testimonial Card */
+/* --- Icon decorations --- */
+.icon {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+/* =================================================================
+ * 5. 特定用途樣式 (Utilities: Testimonial, Notice, Contact Cards)
+ * ----------------------------------------------------------------- */
+
+/* --- Testimonial Card: 客戶見證/引言區塊 --- */
 .testimonial {
-  background: linear-gradient(135deg, #faf8f6 0%, #f5f1ed 100%);
-  border-radius: 15px;
-  padding: 30px;
-  margin: 20px 0;
-  border-left: 5px solid var(--color-primary); /* 使用新的主色 */
-  position: relative;
-  z-index: 1;
+    background: linear-gradient(135deg, #faf8f6 0%, #f5f1ed 100%);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 0;
+    border-left: 5px solid var(--color-primary);
+    position: relative;
+    z-index: 1;
 }
 
-/* 【新增】確保 testimonial 內的文字層級高於裝飾引號 */
 .testimonial p, .testimonial-author {
-  position: relative;
-  z-index: 2; 
+    position: relative;
+    z-index: 2; 
 }
 
+/* 裝飾性引號 */
 .testimonial:before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  font-size: 60px;
-  color: #e8dfd6;
-  font-family: Georgia, serif;
+    content: ""; /* 不使用內容，使用背景圖或 font-icon 更佳，但維持原樣 */
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 60px;
+    color: #e8dfd6;
+    font-family: Georgia, serif;
 }
 
 .testimonial-author {
-  text-align: right;
-  color: #9f9693; /* 使用新的中性色 */
-  font-size: 15px;
-  font-weight: 500;
+    text-align: right;
+    color: #9f9693;
+    font-size: 15px;
+    font-weight: 500;
 }
 
-/* Notice Box */
+/* --- Notice Box: 通知/強調區塊 --- */
 .notice-box {
-  background: #fbf9f8; /* 調整通知框背景色 */
-  border: 2px solid #e8dfd6;
-  border-radius: 12px;
-  padding: 25px;
-  margin: 20px 0;
+    background: #fbf9f8;
+    border: 2px solid #e8dfd6;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px 0;
 }
 
 .notice-box h4 {
-  color: var(--color-secondary); /* 使用新的輔色 */
-  margin: 0 0 15px 0;
-  font-size: 18px;
-  font-weight: 500;
+    color: var(--color-secondary);
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    font-weight: 500;
 }
 
-/* Notice Box */
-.notice-box {
-  background: #fbf9f8; /* 調整通知框背景色 */
-  border: 2px solid #e8dfd6;
-  border-radius: 12px;
-  padding: 25px;
-  margin: 20px 0;
-  }
-
-/* ... (Notice Box 內的其他樣式) ... */
-
-/* --- 新增：卡片風格聯絡區塊樣式 (淺色系，橫向排列) --- */
-
-/* 1. 容器：使用 Grid 實現橫向排列和響應式 */
+/* --- Contact Cards: 聯絡區塊 (Grid 佈局) --- */
 .contact-card-list-container {
     display: grid;
     /* 桌面版：分成 3 欄，且自動適應 */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     gap: 20px;
-    margin: 30px auto; /* 讓區塊在內容區塊內置中 */
+    margin: 30px auto;
 }
 
-/* 2. 單一卡片連結樣式 */
 .contact-card {
     display: block;
     text-align: center;
     padding: 30px;
-    
-    /* 淺色系背景和陰影 (繼承 .card 風格) */
-    background: var(--color-surface); /* 白色背景 */
+    background: var(--color-surface);
     border-radius: 20px; 
     box-shadow: 0 5px 20px rgba(0,0,0,0.06); 
-    
-    text-decoration: none; /* 移除底線 */
-    color: var(--color-text-main); /* 基礎文字顏色 */
+    text-decoration: none;
+    color: var(--color-text-main);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .contact-card:hover {
-    /* 滑鼠滑過時的動態效果 */
     transform: translateY(-5px);
     box-shadow: 0 8px 30px rgba(0,0,0,0.1);
 }
 
-/* 3. Icon 樣式 */
 .contact-card i {
     font-size: 36px;
     margin-bottom: 15px;
-    /* Icon 顏色使用主色/行動色 */
     color: var(--color-primary); 
 }
 
-/* 4. 標題樣式 (如：LINE 即時預約) */
 .contact-card h4 {
     margin: 0 0 5px 0;
-    /* 標題使用深色輔色 */
     color: var(--color-secondary);
     font-weight: 500;
     font-size: 18px; 
-    display: flex;       /* 使用 Flexbox 確保 Icon 和文字可以對齊 */
-    justify-content: center; /* 讓標題區塊置中 */
-    align-items: center; /* 垂直居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 /* 針對 H4 內行內 PNG 圖片設定樣式 */
 .contact-card h4 .h4-inline-icon {
-    /* 設定圖片的尺寸 */
     width: 18px; 
     height: 18px; 
-    
-    /* 設定圖片與文字間的距離 */
     margin-right: 8px; 
-    
-    /* 確保圖片基線不會影響文字對齊 (可選，但推薦) */
     vertical-align: middle;
 }
 
-/* 5. 描述文字樣式 */
 .contact-card p {
     font-size: 14px;
-    /* 描述文字使用淺一點的顏色 */
     color: #8b8888; 
     margin: 0;
     line-height: 1.6;
 }
 
-/* 6. 響應式調整：手機版堆疊 (這會被後面的 @media 覆蓋，但我們也將它放在這裡) */
+/* =================================================================
+ * 6. 響應式設計 (Media Queries)
+ * ----------------------------------------------------------------- */
+
 @media (max-width: 768px) {
+    /* --- Header --- */
+    .header h1 {
+        font-size: 32px;
+    }
+
+    .header p {
+        font-size: 16px;
+    }
+
+    /* --- Navigation --- */
+    .nav-button {
+        font-size: 14px;
+        padding: 15px 10px;
+    }
+    
+    .nav-item {
+        min-width: unset;
+        flex: 1 1 25%;
+    }
+
+    /* --- Content & Cards --- */
+    .content {
+        padding: 30px 20px;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    .card h2 {
+        font-size: 24px;
+    }
+
+    /* --- Price Table --- */
+    .price-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* --- Contact Cards (Grid) --- */
     .contact-card-list-container {
         /* 手機版：堆疊為單欄 */
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; 
+        gap: 15px;
+        padding: 0 10px;
     }
-}
-/* --- 結束：卡片風格聯絡區塊樣式 --- */
 
-/* 針對列表 (li) 內的超連結進行設定 */
-.card li a {
-    /* 使用主色作為連結的顏色 */
-    color: var(--color-primary); 
-    
-    /* 移除超連結預設的底線 */
-    text-decoration: none; 
-    
-    /* 讓文字略微加粗 */
-    font-weight: 500;
-    
-    /* 平滑的顏色過渡效果 */
-    transition: color 0.3s ease;
-}
-
-/* 確保滑鼠滑過時，顏色變成深輔色或深文本色 */
-.card li a:hover {
-    color: var(--color-text-dark); /* 使用深文本色，通常是 #3a3632 */
-    
-    /* 可以添加一個輕微的下底線作為 hover 效果，增加互動性 */
-    text-decoration: underline;
-}
-
-/* 確保 li 項目符號的顏色維持一致 */
-.card li:before {
-    content: "✦";
-    position: absolute;
-    left: 0;
-    color: var(--color-primary); /* 使用新的主色 */
-    font-size: 14px;
-}
-
-/* Icon decorations */
-.icon {
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 20px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .header h1 {
-    font-size: 32px;
-  }
-
-  .header p {
-    font-size: 16px;
-  }
-
-  .nav-button {
-    font-size: 14px;
-    padding: 15px 10px;
-  }
-  
-  .nav-item {
-    min-width: unset;
-    flex: 1 1 25%;
-  }
-
-  .content {
-    padding: 30px 20px;
-  }
-
-  .card {
-    padding: 25px;
-  }
-
-  .card h2 {
-    font-size: 24px;
-  }
-
-  .price-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .contact-card-list-container {
-    /* 這裡使用 1fr 代表只佔一欄，實現垂直堆疊 */
-    grid-template-columns: 1fr; 
-    gap: 15px; /* 稍微縮小間距 */
-    padding: 0 10px; /* 避免在小螢幕上貼邊 */
-  }
-
-  .contact-card {
-    /* 在小螢幕上保持完整卡片樣式，但 padding 可以略小 */
-    padding: 20px; 
-  }
+    .contact-card {
+        padding: 20px; 
+    }
 }
