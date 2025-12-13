@@ -59,18 +59,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dropdownItem) {
         // 1. 點擊主按鈕時：切換 'active-dropdown' 類別來顯示/隱藏選單
         dropdownBtn.addEventListener('click', (event) => {
-            // 點擊下拉按鈕時，阻止事件傳播，避免立即關閉
+            // 點擊主按鈕，阻止事件冒泡，只處理當前下拉選單的開合
             event.stopPropagation(); 
+            // 確保所有其他下拉選單都關閉
+            document.querySelectorAll('.dropdown').forEach(item => {
+                if (item !== dropdownItem) {
+                    item.classList.remove('active-dropdown');
+                }
+            });
             dropdownItem.classList.toggle('active-dropdown');
         });
 
         // 2. 點擊子選單按鈕時：【自動收回選單】
         dropdownItem.querySelectorAll('.submenu .nav-button').forEach(button => {
-            // 【重要修正】：使用 setTimeout 延遲收回動作，確保 showPage 執行的激活邏輯已經完成。
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (event) => {
+                // 【關鍵修正】：阻止事件冒泡，避免點擊子項目時，事件又傳到父層的主按鈕上。
+                event.stopPropagation();
+                
+                // 由於 showPage 已經由 onclick 屬性觸發，我們只需確保延遲收回。
+                // 移除 setTimeout，改為直接延遲收回，並清除主按鈕的激活狀態。
                 setTimeout(() => {
                     dropdownItem.classList.remove('active-dropdown');
-                }, 50); // 短暫延遲 50ms
+                }, 50); 
             });
         });
 
