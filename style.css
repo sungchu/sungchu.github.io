@@ -212,7 +212,7 @@ html, body {
     position: absolute;
     left: 0;
     color: var(--color-primary);
-    font-size: 16px;
+    font-size: 18px;
 }
 
 /* 列表內的小字樣式 */
@@ -536,4 +536,33 @@ html, body {
 
 .submenu .nav-button:hover {
     background: #f0f0f0;
+}
+
+/* =================================================================
+ * 8. 底部連結 (Footer Link)
+ * ----------------------------------------------------------------- */
+.footer-link-container {
+    text-align: center;
+    padding: 40px 0 60px 0; /* 增加上下間距 */
+    border-top: 1px solid #dcd7d5; /* 輕微分隔線 */
+    margin-top: 50px;
+    background: var(--color-background); 
+}
+
+.back-to-top-link {
+    display: inline-block;
+    color: var(--color-primary); /* 使用主色系 */
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid var(--color-primary);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.back-to-top-link:hover {
+    background: var(--color-primary);
+    color: var(--color-surface); /* 文字變為白色 */
+    text-decoration: none;
 }
