@@ -2,7 +2,6 @@ function showPage(pageId) {
     const pages = document.querySelectorAll('.page');
     const buttons = document.querySelectorAll('.nav-button');
     
-    // ... (showPage 內容保持不變，只負責切換頁面和按鈕 active 狀態)
     pages.forEach(page => page.classList.remove('active'));
     buttons.forEach(button => button.classList.remove('active'));
     const targetPage = document.getElementById(pageId) || document.getElementById('about');
@@ -29,9 +28,13 @@ function showPage(pageId) {
     if (window.location.hash !== newHash) {
         window.history.pushState({ page: pageId }, '', newHash);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // 【重要】：子項目點擊後，強制關閉選單，解決手機上不收回的問題
+    // 【修正滾動】：將 window.scrollTo 移入 setTimeout 延遲執行
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50); 
+    
+    // 【收回邏輯】：子項目點擊後，強制關閉選單
     const targetIsSubmenuItem = targetButton && targetButton.closest('.submenu');
     if (targetIsSubmenuItem) {
         setTimeout(() => {
@@ -49,16 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (dropdownItem) {
         // --- 1. 點擊/觸控主按鈕時：開啓選單 ---
-        
-        // 【核心修正】：同時監聽 'click' 和 'touchstart'，確保行動裝置響應
         const toggleDropdown = (event) => {
             event.stopPropagation(); 
-            // 只有當事件類型為 touchstart 時，才阻止瀏覽器默認的 click 行為，避免雙重觸發
             if (event.type === 'touchstart') {
                 event.preventDefault(); 
             }
-            
-            // 每次點擊/觸控都切換狀態
             dropdownItem.classList.toggle('active-dropdown');
         };
 
@@ -67,28 +65,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         // --- 2. 點擊頁面其他地方時：關閉選單 ---
-        document.addEventListener('click', (event) => {
+        const closeDropdown = (event) => {
+             // 確保只有在非下拉菜單本身被點擊時才關閉
             if (!dropdownItem.contains(event.target)) {
                 dropdownItem.classList.remove('active-dropdown');
             }
-        });
-        document.addEventListener('touchstart', (event) => {
-             // 如果點擊目標不在下拉容器內，則移除 active-dropdown
-             if (!dropdownItem.contains(event.target)) {
-                dropdownItem.classList.remove('active-dropdown');
-            }
-        });
+        };
+        document.addEventListener('click', closeDropdown);
+        document.addEventListener('touchstart', closeDropdown);
 
-        // --- 3. 子選單項目點擊時：阻止冒泡，確保不會誤觸主按鈕的 toggle ---
+
+        // --- 3. 子選單項目點擊時：阻止冒泡 ---
         dropdownItem.querySelectorAll('.submenu .nav-button').forEach(button => {
-            // 只需阻止點擊事件冒泡，因為 showPage 處理了頁面切換和選單收回
             button.addEventListener('click', (event) => {
                 event.stopPropagation();
             });
         });
     }
 
-    // 初始化頁面 (保持不變)
+    // 初始化頁面
     let initialPage = 'about'; 
     const validPages = ['about', 'services', 'workshops', 'courses', 'booking', 'testimonials'];
     if (window.location.hash) {
