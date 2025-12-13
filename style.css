@@ -608,3 +608,17 @@ html, body {
     color: var(--color-surface); /* 文字變為白色 */
     text-decoration: none;
 }
+
+    .footer-link-container {
+        /* 在手機上減少間距，讓內容更緊湊 */
+        padding: 30px 20px 40px 20px; 
+        margin-top: 30px;
+    }
+
+    .back-to-top-link {
+        /* 在手機上可以讓按鈕寬度略微加大，更容易點擊 */
+        width: 100%; 
+        max-width: 250px; /* 限制最大寬度，避免過寬 */
+        padding: 12px 15px;
+        font-size: 15px;
+    }
