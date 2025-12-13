@@ -469,3 +469,60 @@ html, body {
         padding: 20px; 
     }
 }
+
+/* =================================================================
+ * 7. 新增：下拉式選單樣式 (Dropdown)
+ * ----------------------------------------------------------------- */
+.nav-item.dropdown {
+    position: relative; /* 讓子選單可以相對於此項目定位 */
+    flex-grow: 1;
+    text-align: center;
+}
+
+.submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    /* 定位在主按鈕下方 */
+    position: absolute;
+    top: 100%; /* 位於父元素下方 */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* 視覺樣式 */
+    background: var(--color-surface);
+    min-width: 180px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1000;
+    
+    /* 預設隱藏 */
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* 顯示下拉選單時的樣式 */
+.dropdown:hover .submenu,
+.dropdown.active-dropdown .submenu {
+    display: block;
+    opacity: 1;
+}
+
+/* 下拉選單內部的按鈕和項目樣式調整 */
+.submenu .nav-item {
+    width: 100%; /* 讓子選單項目佔滿寬度 */
+}
+
+.submenu .nav-button {
+    padding: 12px 15px; /* 調整子選單按鈕的填充 */
+    border-bottom: none; /* 移除子選單按鈕的底部橫線 */
+    font-size: 15px;
+    text-align: left;
+}
+
+.submenu .nav-button:hover {
+    background: #f0f0f0;
+}
