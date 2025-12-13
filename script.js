@@ -1,10 +1,3 @@
-/**
- * NETI 療癒工作室 JavaScript (最終穩定版本 - 確保手機下拉開啓和頁面切換)
- */
-
-/**
- * 根據 pageId 切換頁面內容和導覽列按鈕的激活狀態。
- */
 function showPage(pageId) {
     const pages = document.querySelectorAll('.page');
     const buttons = document.querySelectorAll('.nav-button');
@@ -18,7 +11,7 @@ function showPage(pageId) {
     targetPage.classList.add('active');
     pageId = targetPage.id;
 
-    // 激活目標按鈕
+    // 激活目標按鈕 (略過 dropdown 元素本身)
     const targetButton = Array.from(buttons).find(btn => {
         const btnPageId = btn.getAttribute('onclick')?.match(/showPage\('([^']+)'\)/)?.[1];
         return btnPageId === pageId;
@@ -44,48 +37,34 @@ function showPage(pageId) {
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // 延遲關閉選單（用於子項目點擊後收回）
-    // 【關鍵修正】：如果目標是子項目，延遲關閉。
-    const targetIsSubmenuItem = targetButton && targetButton.closest('.submenu');
-    if (targetIsSubmenuItem) {
-        setTimeout(() => {
-            document.querySelectorAll('.dropdown').forEach(item => {
-                item.classList.remove('active-dropdown');
-            });
-        }, 100); 
-    }
+    
+    // *** 關鍵：此版本不包含自動收回選單的邏輯 ***
 }
 
-// 啟動時和下拉式選單的邏輯處理
 document.addEventListener('DOMContentLoaded', () => {
     
     const dropdownBtn = document.getElementById('service-dropdown-btn');
     const dropdownItem = dropdownBtn ? dropdownBtn.closest('.dropdown') : null;
 
     if (dropdownItem) {
-        // 1. 點擊主按鈕時：開啓選單
+        // 1. 點擊主按鈕時：【唯一目的：切換下拉選單狀態】
         dropdownBtn.addEventListener('click', (event) => {
-            // 【關鍵修正】：移除所有不必要的 stopPropagation()。
-            // 只需要 toggle active-dropdown 狀態。
+            // 確保點擊動作只執行 toggle，並停止事件冒泡，防止 document 上的監聽器立即關閉它
+            event.stopPropagation(); 
             dropdownItem.classList.toggle('active-dropdown');
-
-            // 確保點擊後，頁面上的全局收合監聽器不會立即關閉它。
-            // 將 event.stopPropagation() 留在此處
-            // event.stopPropagation(); 
         });
 
-        // 2. 點擊頁面其他地方時：關閉選單 (保留此功能)
+        // 2. 點擊頁面其他地方時：【保留此功能，這是唯一收回選單的方式】
         document.addEventListener('click', (event) => {
             if (!dropdownItem.contains(event.target)) {
                 dropdownItem.classList.remove('active-dropdown');
             }
         });
         
-        // 【新增】：子選單按鈕，確保點擊時不會觸發外部的收合邏輯
+        // 3. 子選單項目點擊時：【阻止冒泡，確保點擊頁面後不會誤觸主按鈕的 toggle】
         dropdownItem.querySelectorAll('.submenu .nav-button').forEach(button => {
             button.addEventListener('click', (event) => {
-                // 阻止事件冒泡到主按鈕，防止出現雙擊效果
+                // 必須阻止冒泡，否則在點擊子項目時，事件會傳遞到主按鈕，導致主按鈕的 toggle 邏輯被執行。
                 event.stopPropagation();
             });
         });
@@ -103,8 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage(initialPage);
 });
 
-
-// 監聽 URL Hash 改變事件
 window.addEventListener('hashchange', () => {
     let pageId = window.location.hash ? window.location.hash.substring(1) : 'about';
     showPage(pageId);
