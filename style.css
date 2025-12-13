@@ -197,7 +197,7 @@ html, body {
 .card li {
     padding: 12px 0;
     color: #6b6b6b;
-    font-size: 22px;
+    font-size: 18px;
     border-bottom: 1px solid #f5f1ed;
     position: relative;
     padding-left: 25px;
@@ -218,7 +218,7 @@ html, body {
 /* 列表內的小字樣式 */
 .content li small {
     color: #666;
-    /* font-style: italic; */
+    font-style: italic;
     display: block;
     margin-top: 4px;
     font-size: 16px;
