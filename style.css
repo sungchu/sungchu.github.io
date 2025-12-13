@@ -48,7 +48,7 @@ html, body {
 .header {
     /* 調整 Header 漸層色，使其更接近品牌圖片的柔和灰色調 */
     background: linear-gradient(135deg, #ddd8d6 0%, var(--color-background) 100%);
-    padding: 10px 30px;
+    padding: 20px 30px;
     text-align: center;
     box-shadow: 0 2px 15px rgba(0,0,0,0.05);
 }
@@ -419,11 +419,11 @@ html, body {
 @media (max-width: 768px) {
     /* --- Header --- */
     .header {
-        padding: 10px 20px; 
+        padding: 30px 20px; 
     }
 
     .header h1 {
-        font-size: 32px;
+        font-size: 24px;
     }
 
     .header p {
