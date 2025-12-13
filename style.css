@@ -415,58 +415,39 @@ html, body {
 /* =================================================================
  * 6. 響應式設計 (Media Queries)
  * ----------------------------------------------------------------- */
-
 @media (max-width: 768px) {
-    /* --- Header --- */
-    .header h1 {
-        font-size: 32px;
-    }
-
-    .header p {
-        font-size: 16px;
-    }
-
-    /* --- Navigation --- */
-    .nav-button {
-        font-size: 14px;
-        padding: 15px 10px;
-    }
+    /* ... (其他現有的手機樣式保持不變) ... */
     
-    .nav-item {
-        min-width: unset;
-        flex: 1 1 25%;
+    /* --- 新增：手機版下拉選單修正 --- */
+    .nav-item.dropdown {
+        /* 在手機上，讓下拉選單容器佔據整行空間 (如果您希望它獨立一行) */
+        flex: 1 1 100%; 
     }
 
-    /* --- Content & Cards --- */
-    .content {
-        padding: 30px 20px;
+    .submenu {
+        /* 在手機上，讓子選單以相對定位顯示在父按鈕下方 */
+        position: static; 
+        
+        /* 讓下拉選單佔滿父容器 (.dropdown) 的寬度 */
+        width: 100%; 
+        
+        /* 移除水平置中，讓它靠左對齊 */
+        transform: none; 
+        left: unset; 
+        
+        /* 移除 box-shadow，讓它看起來更像導覽列的延伸 */
+        box-shadow: none;
+        
+        /* 新增邊界，與主導覽列區分 */
+        border-top: 1px solid #f0f0f0; 
+        border-radius: 0; /* 移除圓角 */
     }
 
-    .card {
-        padding: 25px;
-    }
-
-    .card h2 {
-        font-size: 24px;
-    }
-
-    /* --- Price Table --- */
-    .price-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    /* --- Contact Cards (Grid) --- */
-    .contact-card-list-container {
-        /* 手機版：堆疊為單欄 */
-        grid-template-columns: 1fr; 
-        gap: 15px;
-        padding: 0 10px;
-    }
-
-    .contact-card {
-        padding: 20px; 
+    /* 確保子選單按鈕在手機上仍為全寬 */
+    .submenu .nav-button {
+        width: 100%;
+        text-align: center; /* 讓子選單按鈕居中 */
+        padding: 10px 15px; /* 稍微縮小填充 */
     }
 }
 
