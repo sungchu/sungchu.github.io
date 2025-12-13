@@ -1,58 +1,100 @@
+/**
+ * 根據 pageId 切換頁面內容和導覽列按鈕的激活狀態。
+ * 同時處理 History API 和頁面滾動。
+ */
 function showPage(pageId) {
-  const pages = document.querySelectorAll('.page');
-  const buttons = document.querySelectorAll('.nav-button');
-  
-  // 1. 頁面和按鈕的激活/去激活邏輯 (保持不變)
-  pages.forEach(page => page.classList.remove('active'));
-  buttons.forEach(button => button.classList.remove('active'));
-  
-  // 確保目標頁面存在
-  const targetPage = document.getElementById(pageId);
-  if (targetPage) {
-    targetPage.classList.add('active');
-  } else {
-    // 如果頁面不存在，預設回 'about'
-    pageId = 'about';
-    document.getElementById(pageId).classList.add('active');
-  }
+    const pages = document.querySelectorAll('.page');
+    const buttons = document.querySelectorAll('.nav-button');
+    
+    // --- 1. 頁面和按鈕的激活/去激活邏輯 ---
+    pages.forEach(page => page.classList.remove('active'));
+    buttons.forEach(button => button.classList.remove('active'));
+    
+    // 確保目標頁面存在
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.add('active');
+    } else {
+        // 如果頁面不存在，預設回 'about'
+        pageId = 'about';
+        document.getElementById(pageId).classList.add('active');
+    }
 
-  // 找到對應的按鈕並加上 active 類別 (保持不變)
-  const targetButton = Array.from(buttons).find(btn => {
-      const text = btn.textContent.toLowerCase().trim();
-      // 這裡的判斷條件請確保與您的按鈕文字完全對應
-      if (pageId === 'about' && text.includes('about')) return true;
-      if (pageId === 'services' && text.includes('服務')) return true; // 簡化為包含關鍵字
-      if (pageId === 'workshops' && text.includes('工作坊')) return true;
-      if (pageId === 'courses' && text.includes('課程')) return true;
-      if (pageId === 'booking' && text.includes('預約')) return true;
-      if (pageId === 'testimonials' && text.includes('回饋')) return true;
-      return false;
-  });
-  if (targetButton) {
-    targetButton.classList.add('active');
-  }
-  
-  // 2. ⚡ 關鍵改變：使用 History API 更新 URL 中的 Hash
-  const newHash = '#' + pageId;
-  // 只有當當前 Hash 與目標 Hash 不同時才 pushState
-  if (window.location.hash !== newHash) {
-      window.history.pushState({ page: pageId }, '', newHash);
-  }
+    // 找到對應的按鈕並加上 active 類別
+    const targetButton = Array.from(buttons).find(btn => {
+        // 為了支援中文按鈕，根據文本內容進行判斷
+        const text = btn.textContent.toLowerCase().trim();
+        const btnPageId = btn.getAttribute('onclick').match(/showPage\('([^']+)'\)/)?.[1];
+        
+        return btnPageId === pageId;
+    });
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (targetButton) {
+        targetButton.classList.add('active');
+        
+        // 【新增邏輯】: 如果被激活的按鈕是下拉選單中的子項目，
+        // 則也要將父層的 '服務項目' 按鈕標記為 active，以保持視覺一致性。
+        const parentSubmenu = targetButton.closest('.submenu');
+        if (parentSubmenu) {
+            const dropdownBtn = parentSubmenu.previousElementSibling;
+            if (dropdownBtn && dropdownBtn.id === 'service-dropdown-btn') {
+                dropdownBtn.classList.add('active');
+            }
+        }
+    }
+    
+    // --- 2. History API 處理 ---
+    const newHash = '#' + pageId;
+    // 只有當當前 Hash 與目標 Hash 不同時才 pushState
+    if (window.location.hash !== newHash) {
+        window.history.pushState({ page: pageId }, '', newHash);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 啟動時確保初始狀態正確
+// 啟動時和下拉式選單的邏輯處理
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- A. 處理下拉式選單的開合邏輯 (Dropdown Toggle) ---
+    const dropdownBtn = document.getElementById('service-dropdown-btn');
+    const dropdownItem = dropdownBtn ? dropdownBtn.closest('.dropdown') : null;
+
+    if (dropdownItem) {
+        // 點擊主要按鈕時切換 'active-dropdown' 類別
+        dropdownBtn.addEventListener('click', (event) => {
+            // 點擊下拉按鈕時，不應觸發其他 showPage 邏輯
+            if (event.currentTarget === dropdownBtn) {
+                event.stopPropagation(); // 防止點擊按鈕後立即觸發 document 點擊事件
+                dropdownItem.classList.toggle('active-dropdown');
+            }
+        });
+
+        // 點擊子選單按鈕時關閉選單 (showPage 函式會自動處理頁面切換)
+        dropdownItem.querySelectorAll('.submenu .nav-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // 點擊子項目後關閉選單
+                dropdownItem.classList.remove('active-dropdown');
+            });
+        });
+
+        // 點擊頁面其他地方時關閉選單
+        document.addEventListener('click', (event) => {
+            if (!dropdownItem.contains(event.target)) {
+                dropdownItem.classList.remove('active-dropdown');
+            }
+        });
+    }
+
+
+    // --- B. 啟動時確保初始狀態正確 (Initial Load) ---
     let initialPage = 'about'; // 預設頁面
+    const validPages = ['about', 'services', 'workshops', 'courses', 'booking', 'testimonials'];
 
     // 1. 檢查 URL 中是否有 #hash
     if (window.location.hash) {
-        // 取得 # 後面的內容，例如從 #services 得到 services
         const hashId = window.location.hash.substring(1); 
         
-        // 確保 hashId 是您定義的有效頁面 ID 之一 (可選的驗證)
-        const validPages = ['about', 'services', 'workshops', 'courses', 'booking', 'testimonials'];
         if (validPages.includes(hashId)) {
             initialPage = hashId;
         }
@@ -63,8 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// 3. 監聽 URL Hash 改變事件 (處理瀏覽器的 上一頁/下一頁 按鈕)
-// 當使用者點擊瀏覽器返回或前進鍵時，會觸發此事件。
+// --- 3. 監聽 URL Hash 改變事件 (處理瀏覽器的 上一頁/下一頁 按鈕) ---
 window.addEventListener('hashchange', () => {
     let pageId = 'about'; // 預設頁面
     if (window.location.hash) {
