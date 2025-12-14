@@ -517,11 +517,11 @@ html, body {
         /* 手機版：堆疊為單欄 */
         grid-template-columns: 1fr; 
         gap: 15px;
-        padding: 0 20px;
+        padding: 0 30px;
     }
 
     .contact-card {
-        padding: 20px; 
+        padding: 40px; 
     }
 }
 
