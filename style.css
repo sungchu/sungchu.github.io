@@ -515,9 +515,9 @@ html, body {
     /* --- Contact Cards (Grid) --- */
     .contact-card-list-container {
         /* 手機版：堆疊為單欄 */
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr 1fr; 
         gap: 15px;
-        padding: 0 10px;
+        padding: 0 20px;
     }
 
     .contact-card {
