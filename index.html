@@ -38,20 +38,6 @@
         h1 { margin: 0; font-size: 1.6rem; letter-spacing: 1px; }
         .subtitle { font-size: 0.85rem; opacity: 0.8; margin-top: 8px; font-weight: 300; }
 
-        /* 天氣儀表板：毛玻璃質感 */
-        .weather-widget {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 15px;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .weather-icon { font-size: 2.2rem; margin-right: 15px; }
-        .weather-info { font-size: 0.9rem; }
-
         /* 頁面切換機制 */
         .page-container {
             display: none;
@@ -118,19 +104,6 @@
         aspect-ratio: 16 / 9;  /* 自動維持 16:9 的比例 */
         height: auto;          /* 高度自動計算 */
         }
-
-        /* 記帳本 */
-        .expense-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .expense-input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
-        .total-banner { 
-            background: var(--secondary-color); 
-            color: white; 
-            padding: 20px; 
-            border-radius: 15px; 
-            margin-bottom: 20px; 
-            text-align: center;
-        }
-        .total-amount { font-size: 2rem; font-weight: 800; display: block; color: var(--accent-color); }
 
         /* 底部導航 */
         .bottom-nav {
@@ -200,9 +173,9 @@
                 <div class="time">17:30</div>
                 <div class="location">入住旅館：寶桑町屋</div>
 				<br>預訂編號：BB25112719575357</br>
-				<br>總金額：9234元（已經先付訂金2770）</br>
+				<br>總金額：9234元（已經先付訂金2770，其餘入住時付款）</br>
 				<br>最早可入住時間為15:00，隔日退房時間為11:00前。</br>
-				<br>停車資訊：町屋周圍非紅線區域皆可停車，或町屋旁有空地也可停放您的愛車，請洽現場服務人員確認。</br>
+				<br>停車資訊：町屋旁有空地也可停放您的愛車，請洽現場服務人員確認。</br>
 				<br>注意事項：為響應環保，客房內不提供拋棄式備品（如牙膏、牙刷、梳子、刮鬍刀、浴帽、棉花棒、免洗拖鞋），敬請自備。櫃檯另有提供成人室內環保拖鞋，若有需要可前往告知需求。</br>
                 <a href="https://maps.app.goo.gl/TbbzTXCdFHUsWvoU9" target="_blank" class="btn btn-map">開啟導航</a>
             </div>
@@ -264,24 +237,60 @@
         </div>
 
         <div id="day-3" class="day-content" style="display:none;">
+            
             <div class="timeline-item">
-                <div class="time">09:30</div>
-                <div class="location">鹿野高台</div>
-                <div class="note">非熱氣球季也是草坡滑草的好地方，視野開闊。</div>
+                <div class="time">08:00</div>
+                <div class="location">早餐：纏記舊街東河包子 or 千千咖啡CHIEN_CAFE</div>
+                <br>民宿環境不錯，建議買早餐回去慢慢吃，不用急著退房</br>
+                <a href="https://maps.app.goo.gl/xbF79ybxfWE6r5x4A" target="_blank" class="btn btn-map">導航至纏記舊街東河包子</a>
+				<a href="https://maps.app.goo.gl/fpQd7XMvgn8owbCg9" target="_blank" class="btn btn-map">導航至千千咖啡CHIEN_CAFE</a>
             </div>
-            <div class="timeline-item alert">
+            <div class="timeline-item">
+                <div class="time">10:30</div>
+                <div class="location">點心：成功豆花</div>
+                <a href="https://maps.app.goo.gl/KdM1G3Q4BghXZireA" target="_blank" class="btn btn-map">開啟導航</a>
+            </div>
+            <div class="timeline-item">
+                <div class="time">11:00</div>
+                <div class="location">伴手禮時間：成功鎮農會生鮮超市</div>
+                <br>推薦買花蓮特有的封仔餅吃看看</br>
+                <a href="https://maps.app.goo.gl/25cyD2yC6769pXot6" target="_blank" class="btn btn-map">開啟導航</a>
+            </div>
+            <div class="timeline-item">
                 <div class="time">12:00</div>
-                <div class="location">池上大坡池 & 伯朗大道</div>
-                <div class="note">⚠️ 必吃池上便當！租電動腳踏車騎伯朗大道比較輕鬆。</div>
+                <div class="location">午餐：旗遇海味</div>
+                <br>已訂位。訂位大名：柯詩安 / 電話：0988107615</br>
+				<a href="https://maps.app.goo.gl/i6syNfk97vCj6RaS6" target="_blank" class="btn btn-map">開啟導航</a>
             </div>
             <div class="timeline-item">
-                <div class="time">15:00</div>
-                <div class="location">回程台東車站</div>
-                <div class="note">買伴手禮（地瓜酥、陳記麻糬）。</div>
+                <div class="time">13:30</div>
+                <div class="location">飯後咖啡時間</div>
+                <a href="https://maps.app.goo.gl/64vbqMnzEosKi9cT8" target="_blank" class="btn btn-map">開啟導航</a>
             </div>
-
             <div class="timeline-item">
-                <div class="time">18:29</div>
+                <div class="time">16:30</div>
+                <div class="location">米嚕達嚕正宗原創霧台神山小米甜甜圈</div>
+				<a href="https://maps.app.goo.gl/7KXAewwT3SMcSyEW7" target="_blank" class="btn btn-map">開啟導航</a>
+            </div>
+            <div class="timeline-item">
+                <div class="time">16:00</div>
+                <div class="location">玉里橋頭臭豆腐</div>
+				<a href="https://maps.app.goo.gl/fqhzKUWQ91p2jtmeA" target="_blank" class="btn btn-map">開啟導航</a>
+            </div>
+            <div class="timeline-item">
+                <div class="time">17:00</div>
+                <div class="location">晚餐(如果還吃得下&覺得來玉里還是要吃玉里麵的話)：馬蓋先美食玉里麵</div>
+                <br>餐廳距離火車站已經很近，如果要排隊的話，其實可以先去還車</br>
+				<a href="https://maps.app.goo.gl/FppDkentftcLJaAo7" target="_blank" class="btn btn-map">開啟導航</a>
+            </div>
+            <div class="timeline-item">
+                <div class="time">18:00</div>
+                <div class="location">格上租車還車</div>
+                <br>原定還車時間為18:00，但費用可多退少補，無須整點還車</br>
+				<a href="https://maps.app.goo.gl/pSA4ZVsyEKbLLTsw5" target="_blank" class="btn btn-map">開啟導航</a>
+            </div>
+            <div class="timeline-item">
+                <div class="time">18:15</div>
                 <div class="location">前往花蓮玉里火車站準備回程</div>
                 <br>火車發車時間：18:29</br>
                 <br>車種車次：自強(3000)441</br>
@@ -301,19 +310,13 @@
             <div class="info-title">額外提醒</div>
             <div class="note">台東有很多店家只收現金，請記得多攜帶一些。</div>
             <div class="note">住宿請自備牙刷、牙膏等一次性用品。</div>
+            <div class="note">泡溫泉需攜帶泳衣泳帽。</div>
             <div class="note">建議攜帶防蚊液。</div>
         </div>
         <div class="info-card">
             <div class="info-title">江賢二藝術園區介紹</div>
             <iframe class="video-responsive" src="https://www.youtube.com/embed/7J04_DK8moE?si=38DEm-U4zcV_peWK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            <div class="note">
-                台東叫車專線：089-XXXXXX <br>
-                台東旅遊服務中心：089-357131
-            </div>
-        </div>
-        <div class="info-card">
-            <div class="info-title">原民文化禮儀</div>
-            <div class="note">參觀部落時請尊重隱私，不隨意進入私人宅邸，攝影前先詢問唷。</div>
+            <iframe class="video-responsive" src="https://www.youtube.com/embed/0534ueibK-E?si=ZqbyRU-9egHjSzd8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -358,55 +361,6 @@
             document.querySelectorAll('.day-content').forEach(el => el.style.display = 'none');
             document.getElementById('day-' + dayNum).style.display = 'block';
         }
-
-        // 記帳功能
-        const STORAGE_KEY = 'taitung_trip_expenses';
-        let expenses = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-
-        function renderExpenses() {
-            const list = document.getElementById('expense-list');
-            const totalEl = document.getElementById('total-amount');
-            list.innerHTML = '';
-            let total = 0;
-            expenses.forEach((item, index) => {
-                total += parseInt(item.cost);
-                const li = document.createElement('li');
-                li.style = "background:white; padding:15px; border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between; box-shadow:0 2px 5px rgba(0,0,0,0.05)";
-                li.innerHTML = `
-                    <span>${item.name}</span>
-                    <span style="font-weight:bold">$${item.cost} <button onclick="deleteExpense(${index})" style="color:#ff6b6b;border:none;background:none;font-size:1.2rem;margin-left:10px;">✕</button></span>
-                `;
-                list.appendChild(li);
-            });
-            totalEl.innerText = `NT$ ${total.toLocaleString()}`;
-        }
-
-        function addExpense() {
-            const nameEl = document.getElementById('expense-name');
-            const costEl = document.getElementById('expense-cost');
-            if (nameEl.value && costEl.value) {
-                expenses.push({ name: nameEl.value, cost: costEl.value });
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
-                nameEl.value = ''; costEl.value = '';
-                renderExpenses();
-            }
-        }
-
-        function deleteExpense(index) {
-            expenses.splice(index, 1);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
-            renderExpenses();
-        }
-
-        function clearExpenses() {
-            if(confirm('要重新開始記帳嗎？')) {
-                expenses = [];
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
-                renderExpenses();
-            }
-        }
-
-        renderExpenses();
     </script>
 </body>
 </html>
