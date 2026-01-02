@@ -111,6 +111,14 @@
         }
         .info-title { font-weight: bold; color: var(--secondary-color); margin-bottom: 5px; }
 
+        /* 使嵌入影片自適應大小 */
+        .video-responsive {
+        width: 100%;           /* 寬度填滿父容器 */
+        max-width: 800px;      /* 選填：限制最大寬度，避免在電腦版太大 */
+        aspect-ratio: 16 / 9;  /* 自動維持 16:9 的比例 */
+        height: auto;          /* 高度自動計算 */
+        }
+
         /* 記帳本 */
         .expense-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .expense-input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
@@ -297,7 +305,7 @@
         </div>
         <div class="info-card">
             <div class="info-title">江賢二藝術園區介紹</div>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/7J04_DK8moE?si=38DEm-U4zcV_peWK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe class="video-responsive" src="https://www.youtube.com/embed/7J04_DK8moE?si=38DEm-U4zcV_peWK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <div class="note">
                 台東叫車專線：089-XXXXXX <br>
                 台東旅遊服務中心：089-357131
